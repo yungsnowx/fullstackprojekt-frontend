@@ -1,1 +1,0 @@
-# fullstackprojekt-frontend
