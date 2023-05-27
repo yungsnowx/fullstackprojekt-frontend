@@ -13,9 +13,4 @@ export class ProductService {
     console.log('execute listProducts');
     return this.httpClient.get<ProductDTO[]>('/produkt');
   }
-
-  public listUsers(): Observable<ProductDTO[]> {
-    console.log('execute listProducts');
-    return this.httpClient.get<ProductDTO[]>('/produkt');
-  }
 }
