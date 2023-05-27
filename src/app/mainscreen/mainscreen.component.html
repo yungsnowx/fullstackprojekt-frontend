@@ -1,0 +1,11 @@
+<h1 class="title">Produkte</h1>
+
+<div class="products">
+  <div *ngFor="let product of products | async; let i = index">
+    <app-product
+      title="{{ product.produktname }}"
+      description="{{ product.produktbeschreibung }}"
+      class="product"
+    ></app-product>
+  </div>
+</div>
