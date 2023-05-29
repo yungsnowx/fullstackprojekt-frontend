@@ -1,8 +1,15 @@
 <p>
   <mat-toolbar color="primary">
     <span>Webshop</span>
-    <button mat-icon-button aria-label="Suche" matTooltip="Suche starten">
-      <mat-icon>search</mat-icon>
-    </button>
+    <div>
+      <button mat-icon-button aria-label="Suche" matTooltip="Suche starten">
+        <span class="material-icons">search</span>
+      </button>
+
+      <button mat-icon-button matBadge="8" matBadgePosition="below after" matBadgeColor="accent" aria-label="Warenkorb" matTooltip="Warenkorb">
+        <span class="material-icons">shopping_bag</span>
+      </button>
+      
+    </div>
   </mat-toolbar>
 </p>
