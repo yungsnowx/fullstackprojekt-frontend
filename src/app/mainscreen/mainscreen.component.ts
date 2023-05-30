@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ProductDTO } from '../model/productDTO';
-import { ProductService } from '../service/product.service';
+import { ProductDTO } from '../model/product/productDTO';
+import { ProductService } from '../service/product/product.service';
 
 @Component({
   selector: 'app-mainscreen',
