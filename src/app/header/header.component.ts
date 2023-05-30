@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -7,4 +7,12 @@ import { Component } from '@angular/core';
 })
 export class HeaderComponent {
   showDiv: boolean = false;
+
+  enteredSearchValue: string = '';
+
+  @Output()
+  searchTextChanged: EventEmitter<string> = new EventEmitter<string>();
+  onSearchTextChanged(){
+    this.searchTextChanged.emit(this.enteredSearchValue);
+  }
 }
