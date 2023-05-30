@@ -7,4 +7,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'fullstackprojekt-frontend';
+
+  seachText: string = '';
+
+  onSearchTextEntered(searchValue: string){
+    this.seachText = searchValue;
+    console.log(searchValue);
+    
+  }
+
+  
 }
