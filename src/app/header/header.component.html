@@ -1,8 +1,12 @@
 <p>
   <mat-toolbar color="primary">
     <span>Webshop</span>
-    <div>
-      <button mat-icon-button aria-label="Suche" matTooltip="Suche starten">
+    <div id="toolbar-elements">
+      <mat-form-field *ngIf="showDiv" id="searchbar" subscriptSizing="dynamic">
+        <mat-label>Suche</mat-label>
+        <input matInput>
+      </mat-form-field>
+      <button id="searchbutton" (click)="showDiv = !showDiv" mat-icon-button aria-label="Suche" matTooltip="Suche starten">
         <span class="material-icons">search</span>
       </button>
 
