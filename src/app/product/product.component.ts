@@ -8,4 +8,5 @@ import { Component, Input } from '@angular/core';
 export class ProductComponent {
   @Input() title: string = 'Default title';
   @Input() description: string = 'Default description';
+  @Input() price: string = '0.00';
 }

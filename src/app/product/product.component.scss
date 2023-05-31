@@ -1,6 +1,14 @@
 .product-card {
-  max-width: 600px;
-  min-width: 600px;
-  padding: 16px;
+  max-width: 300px;
+  min-width: 300px;
   margin: 8px;
+  cursor: pointer;
+}
+
+.button-addcart {
+  min-width: 100%;
+}
+
+mat-card-content {
+  padding-top: 12px;
 }
