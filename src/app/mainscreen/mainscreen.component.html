@@ -2,10 +2,16 @@
 
 <div class="products">
   <div *ngFor="let product of products | async; let i = index">
-    <div *ngIf="searchValue === '' || product.produktname.toLowerCase().includes( searchValue )">
+    <div
+      *ngIf="
+        searchValue === '' ||
+        product.produktname.toLowerCase().includes(searchValue)
+      "
+    >
       <app-product
         title="{{ product.produktname }}"
         description="{{ product.produktbeschreibung }}"
+        price="{{ product.preis }}"
         class="product"
       ></app-product>
     </div>

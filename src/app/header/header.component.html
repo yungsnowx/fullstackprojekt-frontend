@@ -2,11 +2,27 @@
   <mat-toolbar color="primary">
     <span>Webshop</span>
     <div id="toolbar-elements">
-      <mat-form-field *ngIf="showDiv" id="searchbar" subscriptSizing="dynamic">
+      <mat-form-field
+        *ngIf="showDiv"
+        color="primary"
+        id="searchbar"
+        subscriptSizing="dynamic"
+      >
         <mat-label>Suche</mat-label>
-        <input type="text" [(ngModel)]="enteredSearchValue" (input)="onSearchTextChanged()" matInput>
+        <input
+          type="text"
+          [(ngModel)]="enteredSearchValue"
+          (input)="onSearchTextChanged()"
+          matInput
+        />
       </mat-form-field>
-      <button id="searchbutton" (click)="showDiv = !showDiv" mat-icon-button aria-label="Suche" matTooltip="Suche starten">
+      <button
+        id="searchbutton"
+        (click)="showDiv = !showDiv"
+        mat-icon-button
+        aria-label="Suche"
+        matTooltip="Suche starten"
+      >
         <span class="material-icons">search</span>
       </button>
 
