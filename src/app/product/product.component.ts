@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Sanitizer } from '@angular/core';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-product',
@@ -9,4 +10,5 @@ export class ProductComponent {
   @Input() title: string = 'Default title';
   @Input() description: string = 'Default description';
   @Input() price: string = '0.00';
+  @Input() image: string = '';
 }
