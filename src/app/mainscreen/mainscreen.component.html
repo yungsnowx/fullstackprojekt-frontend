@@ -6,11 +6,7 @@
       *ngIf="
         searchValue === '' ||
         product.produktname.toLowerCase().includes(searchValue) ||
-        product.produktname.toUpperCase().includes(searchValue) ||
-        product.produktname.includes(searchValue) ||
-        product.produktbeschreibung.toLowerCase().includes(searchValue) ||
-        product.produktbeschreibung.toUpperCase().includes(searchValue) ||
-        product.produktbeschreibung.includes(searchValue)
+        product.produktbeschreibung.toLowerCase().includes(searchValue)
       "
     >
       <app-product
