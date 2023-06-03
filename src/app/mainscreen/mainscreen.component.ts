@@ -16,7 +16,7 @@ export class MainscreenComponent implements OnInit {
   @Input() searchValue: string;
   
   constructor(productService: ProductService) {
-    this.product = new ProductDTO(0, 'Test', '123', 13.99);
+    this.product = new ProductDTO(0, 'Test', '123', 13.99, '');
     this.productService = productService;
     this.products = productService.listProducts();
     this.searchValue = '';
