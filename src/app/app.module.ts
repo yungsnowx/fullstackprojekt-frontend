@@ -9,10 +9,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 
-import { registerLocaleData } from '@angular/common';
+import {NgIf, registerLocaleData} from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {FormControl, FormsModule,ReactiveFormsModule} from '@angular/forms';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -22,6 +22,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MainscreenComponent } from './mainscreen/mainscreen.component';
 import { ProductComponent } from './product/product.component';
+import { LogInComponent } from './log-in/log-in.component';
 
 registerLocaleData(localeDe);
 
@@ -31,6 +32,7 @@ registerLocaleData(localeDe);
     HeaderComponent,
     ProductComponent,
     MainscreenComponent,
+    LogInComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,6 +49,7 @@ registerLocaleData(localeDe);
     MatCardModule,
     HttpClientModule,
     MatBadgeModule,
+    ReactiveFormsModule
   ],
   providers: [
     {

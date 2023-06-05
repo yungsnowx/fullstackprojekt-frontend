@@ -7,10 +7,11 @@ import { ProductDTO } from '../../model/product/productDTO';
   providedIn: 'root',
 })
 export class ProductService {
+  url = "/produkt";
   constructor(private httpClient: HttpClient) {}
 
   public listProducts(): Observable<ProductDTO[]> {
     console.log('execute listProducts');
-    return this.httpClient.get<ProductDTO[]>('/produkt');
+    return this.httpClient.get<ProductDTO[]>(this.url);
   }
 }

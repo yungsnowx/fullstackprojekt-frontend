@@ -1,7 +1,8 @@
-import { Product } from './product';
+//import { Product } from './product';
+import {ProductDTO} from "./productDTO";
 
 describe('Product', () => {
   it('should create an instance', () => {
-    expect(new Product()).toBeTruthy();
+    expect(new ProductDTO(0,"","",0)).toBeTruthy();
   });
 });

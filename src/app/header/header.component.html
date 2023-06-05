@@ -1,6 +1,11 @@
 <p>
   <mat-toolbar color="primary">
-    <span>Webshop</span>
+    <a routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact : true}">
+    <span>
+      Webshop
+    </span>
+
+    </a>
     <div id="toolbar-elements">
       <mat-form-field
         *ngIf="showDiv"
@@ -36,6 +41,14 @@
           shopping_bag
         </span>
       </button>
+      <a routerLink="log_in" routerLinkActive="active" >
+        <button mat-icon-button aria-label="login" matTooltip="Anmelden">
+          <span class="material-icons">
+            person
+          </span>
+        </button>
+      </a>
+
     </div>
   </mat-toolbar>
 </p>

@@ -15,4 +15,5 @@ export class HeaderComponent {
   onSearchTextChanged(){
     this.searchTextChanged.emit(this.enteredSearchValue);
   }
+
 }
