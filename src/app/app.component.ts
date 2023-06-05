@@ -12,9 +12,7 @@ export class AppComponent {
 
   onSearchTextEntered(searchValue: string){
     this.seachText = searchValue;
-    console.log(searchValue);
-    
-  }
+}
 
   
 }

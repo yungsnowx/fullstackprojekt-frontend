@@ -5,10 +5,12 @@
     <div
       *ngIf="
         searchValue === '' ||
-        product.produktname.toLowerCase().includes(searchValue)
+        product.produktname.toLowerCase().includes(searchValue) ||
+        product.produktbeschreibung.toLowerCase().includes(searchValue)
       "
     >
       <app-product
+        image="{{ product.bild }}"
         title="{{ product.produktname }}"
         description="{{ product.produktbeschreibung }}"
         price="{{ product.preis }}"
