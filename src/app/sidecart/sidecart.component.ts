@@ -8,5 +8,5 @@ import { Component, Input } from '@angular/core';
 export class SidecartComponent {
   @Input() searchValue: string = '';
 
-  @Input() showCard = false;
+  @Input() getCartValue: boolean = false;
 }

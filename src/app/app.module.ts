@@ -24,6 +24,7 @@ import { MainscreenComponent } from './mainscreen/mainscreen.component';
 import { ProductComponent } from './product/product.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { SidecartComponent } from './sidecart/sidecart.component';
+import { MatListModule } from '@angular/material/list';
 
 registerLocaleData(localeDe);
 
@@ -51,6 +52,7 @@ registerLocaleData(localeDe);
     HttpClientModule,
     MatBadgeModule,
     MatSidenavModule,
+    MatListModule,
   ],
   providers: [
     {

@@ -21,7 +21,12 @@ export class HeaderComponent {
   @Output()
   toggled: EventEmitter<any> = new EventEmitter<any>();
   cartClicked(){
-    this.showCart != this.showCart;
+
+    if(this.showCart == false){
+      this.showCart = true;
+    } else {
+      this.showCart = false;
+    }
     this.toggled.emit(this.showCart);
   }
 }

@@ -1,0 +1,21 @@
+<mat-sidenav-container>
+
+    <mat-sidenav #sidenav opened="{{ getCartValue }}" position="end" mode="side" >
+
+        <h1>Ihr Warenkorb</h1>
+
+        <hr>
+
+        <mat-nav-list>
+            <p mat-list-item>Produkt 1</p>
+            <p mat-list-item>Produkt2</p>
+        </mat-nav-list>
+
+    </mat-sidenav>
+
+
+    <mat-sidenav-content>
+        <app-mainscreen [searchValue]="searchValue"></app-mainscreen>
+    </mat-sidenav-content>
+
+</mat-sidenav-container>
