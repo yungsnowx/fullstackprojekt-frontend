@@ -15,4 +15,13 @@ export class HeaderComponent {
   onSearchTextChanged(){
     this.searchTextChanged.emit(this.enteredSearchValue.toLowerCase());
   }
+
+  showCart: boolean = false;
+
+  @Output()
+  toggled: EventEmitter<any> = new EventEmitter<any>();
+  cartClicked(){
+    this.showCart != this.showCart;
+    this.toggled.emit(this.showCart);
+  }
 }
