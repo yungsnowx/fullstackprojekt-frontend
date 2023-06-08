@@ -1,4 +1,3 @@
-<app-header (searchTextChanged)="onSearchTextEntered($event)"></app-header>
-<div class="content">
-  <app-mainscreen [searchValue]="seachText"></app-mainscreen>
-</div>
+<app-header (searchTextChanged)="onSearchTextEntered($event)" (toggled)="cartToggle($event)"></app-header>
+<app-sidecart [searchValue]="seachText" [getCartValue]="cart"></app-sidecart>
+

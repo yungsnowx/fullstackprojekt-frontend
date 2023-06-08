@@ -22,6 +22,9 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MainscreenComponent } from './mainscreen/mainscreen.component';
 import { ProductComponent } from './product/product.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { SidecartComponent } from './sidecart/sidecart.component';
+import { MatListModule } from '@angular/material/list';
 
 registerLocaleData(localeDe);
 
@@ -31,6 +34,7 @@ registerLocaleData(localeDe);
     HeaderComponent,
     ProductComponent,
     MainscreenComponent,
+    SidecartComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,6 +51,8 @@ registerLocaleData(localeDe);
     MatCardModule,
     HttpClientModule,
     MatBadgeModule,
+    MatSidenavModule,
+    MatListModule,
   ],
   providers: [
     {
