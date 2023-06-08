@@ -1,18 +1,37 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Observable } from 'rxjs';
+import { CartContentDTO } from '../model/cartcontent/cart-contentDTO';
+import { CartContentService } from '../service/cartcontent/cart-content.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
+  private cartContentService: CartContentService;
+  public cartContents: Observable<CartContentDTO[]>;
+  public cartSize: number;
+
+  constructor(cartContentService: CartContentService) {
+    this.cartContentService = cartContentService;
+    this.cartContents = cartContentService.listCartContentByCartId(3);
+
+    this.cartSize = 0;
+    this.cartContents.forEach((cartContent) => {
+      cartContent.forEach((content) => {
+        this.cartSize += content.anzahl;
+      });
+    });
+  }
+
   showDiv: boolean = false;
 
   enteredSearchValue: string = '';
 
   @Output()
   searchTextChanged: EventEmitter<string> = new EventEmitter<string>();
-  onSearchTextChanged(){
+  onSearchTextChanged() {
     this.searchTextChanged.emit(this.enteredSearchValue.toLowerCase());
   }
 
@@ -20,13 +39,13 @@ export class HeaderComponent {
 
   @Output()
   toggled: EventEmitter<any> = new EventEmitter<any>();
-  cartClicked(){
-
-    if(this.showCart == false){
+  cartClicked() {
+    if (this.showCart == false) {
       this.showCart = true;
     } else {
       this.showCart = false;
     }
     this.toggled.emit(this.showCart);
   }
+  ngOnInit(): void {}
 }
