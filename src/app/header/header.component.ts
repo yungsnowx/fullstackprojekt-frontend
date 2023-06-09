@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CartContentDTO } from '../model/cartcontent/cart-contentDTO';
 import { CartContentService } from '../service/cartcontent/cart-content.service';
+import { StaticVars } from '../config/static-vars';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +16,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(cartContentService: CartContentService) {
     this.cartContentService = cartContentService;
-    this.cartContents = cartContentService.listCartContentByCartId(3);
+    this.cartContents = cartContentService.listCartContentByCartId(StaticVars.cartIdInUse);
 
     this.cartSize = 0;
     this.cartContents.forEach((cartContent) => {
