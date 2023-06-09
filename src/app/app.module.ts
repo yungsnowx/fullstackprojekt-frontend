@@ -14,6 +14,7 @@ import localeDe from '@angular/common/locales/de';
 import { Component } from '@angular/core';
 import {FormControl, FormsModule,ReactiveFormsModule} from '@angular/forms';
 import { MatBadgeModule } from '@angular/material/badge';
+import {MatMenuModule} from '@angular/material/menu';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -23,6 +24,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MainscreenComponent } from './mainscreen/mainscreen.component';
 import { ProductComponent } from './product/product.component';
 import { LogInComponent } from './log-in/log-in.component';
+import { SignInComponent } from './sign-in/sign-in.component';
 
 registerLocaleData(localeDe);
 
@@ -33,6 +35,7 @@ registerLocaleData(localeDe);
     ProductComponent,
     MainscreenComponent,
     LogInComponent,
+    SignInComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,7 +52,8 @@ registerLocaleData(localeDe);
     MatCardModule,
     HttpClientModule,
     MatBadgeModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatMenuModule
   ],
   providers: [
     {
