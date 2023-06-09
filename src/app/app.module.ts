@@ -8,7 +8,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-
 import {NgIf, registerLocaleData} from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import { Component } from '@angular/core';
@@ -25,6 +24,9 @@ import { MainscreenComponent } from './mainscreen/mainscreen.component';
 import { ProductComponent } from './product/product.component';
 import { LogInComponent } from './log-in/log-in.component';
 import { SignInComponent } from './sign-in/sign-in.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { SidecartComponent } from './sidecart/sidecart.component';
+import { MatListModule } from '@angular/material/list';
 
 registerLocaleData(localeDe);
 
@@ -36,6 +38,8 @@ registerLocaleData(localeDe);
     MainscreenComponent,
     LogInComponent,
     SignInComponent,
+    SidecartComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -54,6 +58,8 @@ registerLocaleData(localeDe);
     MatBadgeModule,
     ReactiveFormsModule,
     MatMenuModule
+    MatSidenavModule,
+    MatListModule,
   ],
   providers: [
     {

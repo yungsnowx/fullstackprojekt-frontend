@@ -12,7 +12,11 @@ export class AppComponent {
 
   onSearchTextEntered(searchValue: string){
     this.seachText = searchValue;
-}
+  }
 
-  
+  cart: boolean = false;
+
+  cartToggle(value: boolean){
+    this.cart = value;
+  }
 }

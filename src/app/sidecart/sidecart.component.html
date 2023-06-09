@@ -1,0 +1,25 @@
+<mat-sidenav-container>
+  <mat-sidenav #sidenav opened="{{ getCartValue }}" position="end" mode="side">
+    <h1>Ihr Warenkorb</h1>
+
+    <hr />
+
+    <mat-nav-list>
+      <div *ngFor="let cartContent of cartContents | async">
+        <div mat-list-item class="productsInCart">
+          <p>{{ cartContent.anzahl }}x&nbsp;</p>
+          <p>{{ cartContent.produktID.produktname }}</p>
+          <p>{{
+            cartContent.produktID.preis * cartContent.anzahl
+              | currency : "EUR" : true
+          }}</p>
+        </div>
+      </div>
+      
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <app-mainscreen [searchValue]="searchValue"></app-mainscreen>
+  </mat-sidenav-content>
+</mat-sidenav-container>

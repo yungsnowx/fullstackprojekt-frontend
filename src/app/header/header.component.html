@@ -1,3 +1,4 @@
+
 <p>
   <mat-toolbar color="primary">
     <a routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact : true}">
@@ -6,38 +7,42 @@
     </span>
 
     </a>
-    <div id="toolbar-elements">
-      <mat-form-field
-        *ngIf="showDiv"
-        color="primary"
-        id="searchbar"
-        subscriptSizing="dynamic"
-      >
-        <mat-label>Suche</mat-label>
-        <input
-          type="text"
-          [(ngModel)]="enteredSearchValue"
-          (input)="onSearchTextChanged()"
-          matInput
-        />
+   <div id="toolbar-elements">
+    <mat-form-field
+      *ngIf="showDiv"
+      color="primary"
+      id="searchbar"
+      subscriptSizing="dynamic"
+    >
+         <mat-label>Suche</mat-label>
+      <input
+        type="text"
+        [(ngModel)]="enteredSearchValue"
+        (input)="onSearchTextChanged()"
+        matInput
+      />
       </mat-form-field>
-      <button
-        id="searchbutton"
-        (click)="showDiv = !showDiv"
-        mat-icon-button
-        aria-label="Suche"
-        matTooltip="Suche starten"
-      >
+     <button
+      id="searchbutton"
+      (click)="showDiv = !showDiv"
+      mat-icon-button
+      aria-label="Suche"
+      matTooltip="Suche starten"
+    >
         <span class="material-icons">search</span>
       </button>
 
-      <button mat-icon-button aria-label="Warenkorb" matTooltip="Warenkorb">
-        <span
-          class="material-icons"
-          matBadge="8"
-          matBadgePosition="below after"
-          matBadgeColor="accent"
-        >
+      <button
+      mat-icon-button
+      aria-label="Warenkorb"
+      matTooltip="Warenkorb"
+      (click)="cartClicked()">
+         <span
+        class="material-icons"
+        matBadge="{{ cartSize }}"
+        matBadgePosition="below after"
+        matBadgeColor="accent"
+      >
           shopping_bag
         </span>
       </button>
@@ -65,12 +70,7 @@
             <span>log out</span>
           </button>
         </a>
-        
-        
       </mat-menu>
-
-
-      
     </div>
   </mat-toolbar>
 </p>
