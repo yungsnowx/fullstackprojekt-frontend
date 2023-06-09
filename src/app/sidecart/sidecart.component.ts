@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CartContentDTO } from '../model/cartcontent/cart-contentDTO';
 import { CartContentService } from '../service/cartcontent/cart-content.service';
+import { StaticVars } from '../config/static-vars';
 
 @Component({
   selector: 'app-sidecart',
@@ -18,7 +19,7 @@ export class SidecartComponent implements OnInit {
 
   constructor(cartContentService: CartContentService) {
     this.cartContentService = cartContentService;
-    this.cartContents = cartContentService.listCartContentByCartId(3);
+    this.cartContents = cartContentService.listCartContentByCartId(StaticVars.cartIdInUse);
     this.searchValue = '';
   }
 
