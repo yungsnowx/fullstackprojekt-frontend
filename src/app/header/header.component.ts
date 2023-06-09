@@ -36,6 +36,7 @@ export class HeaderComponent implements OnInit {
     this.searchTextChanged.emit(this.enteredSearchValue.toLowerCase());
   }
 
+
   showCart: boolean = false;
 
   @Output()

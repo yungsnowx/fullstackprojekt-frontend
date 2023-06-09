@@ -1,0 +1,16 @@
+.log_in{
+
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  margin: 100px auto;
+  mat-form-field{
+    width: 80%;
+    align-self: center;
+  }
+  button{
+    margin-top: 20px;
+    width: 40%;
+    align-self: center;
+  }
+}
