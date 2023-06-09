@@ -3,3 +3,9 @@ mat-sidenav {
     width: 20vw;
     padding: 20px;
 }
+
+.productsInCart {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 20% 55% 25%;
+}
