@@ -57,7 +57,7 @@ registerLocaleData(localeDe);
     HttpClientModule,
     MatBadgeModule,
     ReactiveFormsModule,
-    MatMenuModule
+    MatMenuModule,
     MatSidenavModule,
     MatListModule,
   ],
