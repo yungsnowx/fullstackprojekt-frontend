@@ -60,6 +60,7 @@ registerLocaleData(localeDe);
     MatMenuModule,
     MatSidenavModule,
     MatListModule,
+    NgIf
   ],
   providers: [
     {

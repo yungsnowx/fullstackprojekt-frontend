@@ -15,8 +15,12 @@ export class AppComponent {
   }
 
   cart: boolean = false;
-
+  log:boolean = false;
   cartToggle(value: boolean){
     this.cart = value;
+  }
+  logToggle(value:boolean){
+    this.log = value;
+    console.log(this.log)
   }
 }

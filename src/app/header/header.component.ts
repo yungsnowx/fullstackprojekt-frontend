@@ -38,7 +38,7 @@ export class HeaderComponent implements OnInit {
 
 
   showCart: boolean = false;
-
+  showLog:boolean = false;
   @Output()
   toggled: EventEmitter<any> = new EventEmitter<any>();
   cartClicked() {
@@ -48,6 +48,18 @@ export class HeaderComponent implements OnInit {
       this.showCart = false;
     }
     this.toggled.emit(this.showCart);
+  }
+
+  @Output()
+  log: EventEmitter<boolean> = new EventEmitter<boolean>();
+  logClicked(){
+    if(this.showLog == false){
+      this.showLog = true;
+    }
+    else{
+      this.showLog = false;
+    }
+    this.log.emit(this.showLog)
   }
   ngOnInit(): void {}
 }

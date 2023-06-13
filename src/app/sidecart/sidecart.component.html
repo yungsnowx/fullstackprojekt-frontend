@@ -5,7 +5,7 @@
     <hr />
 
     <mat-nav-list>
-      <div *ngFor="let cartContent of cartContents | async">
+      <!-- <div *ngFor="let cartContent of cartContents | async">
         <div mat-list-item class="productsInCart">
           <p>{{ cartContent.anzahl }}x&nbsp;</p>
           <p>{{ cartContent.produktID.produktname }}</p>
@@ -14,12 +14,29 @@
               | currency : "EUR" : true
           }}</p>
         </div>
+      </div> -->
+
+
+      <div *ngFor="let items of items_ ">
+        <div mat-list-item class="productsInCart">
+          <p>{{ items.count }}x&nbsp;</p>
+          <p>{{ items.product.produktname }}</p>
+          <p>{{
+            items.product.preis * items.count
+              | currency : "EUR" : true
+          }}</p>
+        </div>
       </div>
+
+     
       
     </mat-nav-list>
   </mat-sidenav>
 
-  <mat-sidenav-content>
-    <app-mainscreen [searchValue]="searchValue"></app-mainscreen>
+  <mat-sidenav-content *ngIf="!getlogValue">
+    <app-mainscreen [searchValue]="searchValue"  (itemsProductEvent)="receiditems($event)"></app-mainscreen>
+  </mat-sidenav-content>
+  <mat-sidenav-content *ngIf="getlogValue">
+    <app-log-in></app-log-in>
   </mat-sidenav-content>
 </mat-sidenav-container>

@@ -22,7 +22,7 @@
         matInput
       />
       </mat-form-field>
-     <button
+    <button
       id="searchbutton"
       (click)="showDiv = !showDiv"
       mat-icon-button
@@ -30,9 +30,9 @@
       matTooltip="Suche starten"
     >
         <span class="material-icons">search</span>
-      </button>
+    </button>
 
-      <button
+    <button
       mat-icon-button
       aria-label="Warenkorb"
       matTooltip="Warenkorb"
@@ -42,35 +42,24 @@
         matBadge="{{ cartSize }}"
         matBadgePosition="below after"
         matBadgeColor="accent"
-      >
-          shopping_bag
-        </span>
-      </button>
-      <button mat-icon-button aria-label="login" matTooltip="Anmelden" [matMenuTriggerFor]="menu">
-        <span class="material-icons">
-          person
-        </span>
-      </button>
-      <mat-menu #menu="matMenu">
-        <a routerLink="log_in" routerLinkActive="active">
-          <button mat-menu-item>
-            <mat-icon>account_circle </mat-icon>
-            <span>log in</span>
-          </button>
-        </a>
-        <a routerLink="sign_in" routerLinkActive="active">
-          <button mat-menu-item>
-            <mat-icon>login</mat-icon>
-            <span>sign up</span>
-          </button>
-        </a>
-        <a routerLink="" routerLinkActive="active">
-          <button mat-menu-item disabled="true">
-            <mat-icon>logout</mat-icon>
-            <span>log out</span>
-          </button>
-        </a>
-      </mat-menu>
+    >
+        shopping_bag
+      </span>
+    </button>
+    <button mat-icon-button 
+    aria-label="login" 
+    matTooltip="Anmelden"
+    (click)="logClicked()">
+      <mat-icon>
+        account_circle
+      </mat-icon>
+    </button>
+    <button mat-icon-button aria-label="login" matTooltip="Abmelden">
+      <mat-icon>
+        logout
+      </mat-icon>
+    </button>
+     
     </div>
   </mat-toolbar>
 </p>
