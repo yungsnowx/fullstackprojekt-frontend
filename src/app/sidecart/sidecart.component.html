@@ -9,10 +9,12 @@
         <div mat-list-item class="productsInCart">
           <p>{{ cartContent.anzahl }}x&nbsp;</p>
           <p>{{ cartContent.produktID.produktname }}</p>
-          <p>{{
-            cartContent.produktID.preis * cartContent.anzahl
-              | currency : "EUR" : true
-          }}</p>
+          <p>
+            {{
+              cartContent.produktID.preis * cartContent.anzahl
+                | currency : "EUR" : "€"
+            }}
+          </p>
         </div>
       </div> -->
 
@@ -27,9 +29,6 @@
           }}</p>
         </div>
       </div>
-
-     
-      
     </mat-nav-list>
   </mat-sidenav>
 
