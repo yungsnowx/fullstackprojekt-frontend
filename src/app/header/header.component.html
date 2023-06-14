@@ -1,76 +1,78 @@
-
-<p>
-  <mat-toolbar color="primary">
-    <a routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact : true}">
-    <span>
-      Webshop
-    </span>
-
-    </a>
-   <div id="toolbar-elements">
+<mat-toolbar color="primary">
+  <a
+    routerLink=""
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+  >
+    <span> Webshop </span>
+  </a>
+  <div id="toolbar-elements">
     <mat-form-field
       *ngIf="showDiv"
       color="primary"
       id="searchbar"
       subscriptSizing="dynamic"
     >
-         <mat-label>Suche</mat-label>
+      <mat-label>Suche</mat-label>
       <input
         type="text"
         [(ngModel)]="enteredSearchValue"
         (input)="onSearchTextChanged()"
         matInput
       />
-      </mat-form-field>
-     <button
+    </mat-form-field>
+    <button
       id="searchbutton"
       (click)="showDiv = !showDiv"
       mat-icon-button
       aria-label="Suche"
       matTooltip="Suche starten"
     >
-        <span class="material-icons">search</span>
-      </button>
+      <span class="material-icons">search</span>
+    </button>
 
-      <button
+    <button
       mat-icon-button
       aria-label="Warenkorb"
       matTooltip="Warenkorb"
-      (click)="cartClicked()">
-         <span
+      (click)="cartClicked()"
+    >
+      <span
         class="material-icons"
         matBadge="{{ cartSize }}"
         matBadgePosition="below after"
         matBadgeColor="accent"
       >
-          shopping_bag
-        </span>
-      </button>
-      <button mat-icon-button aria-label="login" matTooltip="Anmelden" [matMenuTriggerFor]="menu">
-        <span class="material-icons">
-          person
-        </span>
-      </button>
-      <mat-menu #menu="matMenu">
-        <a routerLink="log_in" routerLinkActive="active">
-          <button mat-menu-item>
-            <mat-icon>account_circle </mat-icon>
-            <span>log in</span>
-          </button>
-        </a>
-        <a routerLink="sign_in" routerLinkActive="active">
-          <button mat-menu-item>
-            <mat-icon>login</mat-icon>
-            <span>sign up</span>
-          </button>
-        </a>
-        <a routerLink="" routerLinkActive="active">
-          <button mat-menu-item disabled="true">
-            <mat-icon>logout</mat-icon>
-            <span>log out</span>
-          </button>
-        </a>
-      </mat-menu>
-    </div>
-  </mat-toolbar>
-</p>
+        shopping_bag
+      </span>
+    </button>
+    <button
+      mat-icon-button
+      aria-label="login"
+      matTooltip="Anmelden"
+      [matMenuTriggerFor]="menu"
+    >
+      <span class="material-icons"> person </span>
+    </button>
+    <mat-menu #menu="matMenu">
+      <a routerLink="log_in" routerLinkActive="active">
+        <button mat-menu-item>
+          <mat-icon>account_circle </mat-icon>
+          <span>log in</span>
+        </button>
+      </a>
+      <a routerLink="sign_in" routerLinkActive="active">
+        <button mat-menu-item>
+          <mat-icon>login</mat-icon>
+          <span>sign up</span>
+        </button>
+      </a>
+      <a routerLink="" routerLinkActive="active">
+        <button mat-menu-item disabled="true">
+          <mat-icon>logout</mat-icon>
+          <span>log out</span>
+        </button>
+      </a>
+    </mat-menu>
+  </div>
+</mat-toolbar>
