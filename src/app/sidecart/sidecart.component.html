@@ -19,17 +19,14 @@
 
       <div *ngFor="let items of items_ ">
         <div mat-list-item class="productsInCart">
-          <p>{{ items.count }}x&nbsp;</p>
+          <p>{{ items.anzahl }}x&nbsp;</p>
           <p>{{ items.product.produktname }}</p>
           <p>{{
-            items.product.preis * items.count
+            items.product.preis * items.anzahl
               | currency : "EUR" : true
           }}</p>
         </div>
       </div>
-
-     
-      
     </mat-nav-list>
   </mat-sidenav>
 

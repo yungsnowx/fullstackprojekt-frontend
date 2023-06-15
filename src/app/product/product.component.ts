@@ -11,13 +11,12 @@ export class ProductComponent implements OnInit{
   @Input() description: string = 'Default description';
   @Input() price: string = '0.00';
   @Input() image: string = '';
-
+  @Input() id:string= "";
   @Output() messageEvent = new EventEmitter<ProductDTO>() 
   constructor(){}
    
   sendMessage(){
-    console.log("as")
-    this.messageEvent.emit(new ProductDTO(0, this.title,this.description,~~this.price,this.image));
+    this.messageEvent.emit(new ProductDTO(~~this.id, this.title,this.description,~~this.price,this.image));
   }
   ngOnInit(): void {
     

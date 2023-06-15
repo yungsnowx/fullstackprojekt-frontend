@@ -35,13 +35,7 @@ export class LogInComponent implements  OnInit{
     if(this.email.value && this.password.value) {
       this.userService.logIn(new UserDTO(this.email.value, this.password.value)).subscribe( 
         response =>{
-          if(response === Object({message:"succces"})){
-            alert("Sie sind verbunden");
-          }
-          else{
-            console.log(response);
-            alert("unkorrekte Information");
-          }
+          console.log(response)
         }
       )
     }

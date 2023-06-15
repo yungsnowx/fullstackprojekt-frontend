@@ -20,18 +20,28 @@ export class SidecartComponent implements OnInit {
 
   @Input() getlogValue:boolean = false;
   items_:any;
-
+  warenkorbID:any;
+  warenkorbinhaltID:any;
   constructor(cartContentService: CartContentService) {
     this.items_ = []
     this.cartContentService = cartContentService;
     this.cartContents = cartContentService.listCartContentByCartId(StaticVars.cartIdInUse);
+    //this.cartContents = cartContentService.listCarts()
     this.cartContents.subscribe(produkten => {
+      console.log(produkten)
+      this.warenkorbID = produkten[0].warenkorbID
+      this.warenkorbinhaltID = produkten[0].warenkorbinhaltID
       for(let product of produkten ){
-        this.items_.push({product:new ProductDTO(product.produktID.produktID,
-          product.produktID.produktname,
-          product.produktID.produktbeschreibung,
-          product.produktID.preis,
-          product.produktID.bild), count: product.anzahl})
+        this.items_.push({
+          product:new ProductDTO(product.produktID.produktID,
+              product.produktID.produktname,
+              product.produktID.produktbeschreibung,
+              product.produktID.preis,
+              product.produktID.bild), 
+          anzahl: product.anzahl,
+          warenkorbinhaltID: product.warenkorbinhaltID,
+          warenkorbID: product.warenkorbID
+          })
       }
     })
     this.searchValue = '';
@@ -41,15 +51,29 @@ export class SidecartComponent implements OnInit {
     let input = true
     for (let elt  of this.items_){
       if(elt.product.produktname == $event.produktname){
-        elt.count ++;
+        elt.anzahl ++;
+        this.cartContentService.updateCartContent(new CartContentDTO(
+          elt.warenkorbinhaltID,
+          elt.warenkorbID,
+          elt.product.produktID,
+          elt.anzahl))
         input = false
       }
     }
     if(input){
       this.items_.push({
         product: $event,
-        count: 1
+        anzahl: 1,
+        warenkorbinhaltID: this.warenkorbinhaltID,
+        warenkorbID: this.warenkorbID
       })
+      console.log("asd",this.items_.slice(-1))
+        this.cartContentService.addCartContent(new CartContentDTO(
+        this.items_.slice(-1)[0].warenkorbinhaltID,
+        this.items_.slice(-1)[0].warenkorbID,
+        this.items_.slice(-1)[0].product.produktID,
+        this.items_.slice(-1)[0].anzahl))
+        
     }
   }
   ngOnInit() {
