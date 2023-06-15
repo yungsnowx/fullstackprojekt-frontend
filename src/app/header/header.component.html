@@ -1,27 +1,28 @@
-
-<p>
-  <mat-toolbar color="primary">
-    <a routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact : true}">
-    <span>
-      Webshop
-    </span>
-
-    </a>
-   <div id="toolbar-elements">
+<mat-toolbar color="primary">
+  <a
+    routerLink=""
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+  >
+    <span> Webshop </span>
+  </a>
+  <div id="toolbar-elements">
     <mat-form-field
       *ngIf="showDiv"
       color="primary"
       id="searchbar"
       subscriptSizing="dynamic"
     >
-         <mat-label>Suche</mat-label>
+      <mat-label>Suche</mat-label>
       <input
         type="text"
         [(ngModel)]="enteredSearchValue"
         (input)="onSearchTextChanged()"
         matInput
       />
+
       </mat-form-field>
+
     <button
       id="searchbutton"
       (click)="showDiv = !showDiv"
@@ -29,19 +30,23 @@
       aria-label="Suche"
       matTooltip="Suche starten"
     >
+
         <span class="material-icons">search</span>
+
     </button>
 
     <button
       mat-icon-button
       aria-label="Warenkorb"
       matTooltip="Warenkorb"
-      (click)="cartClicked()">
-         <span
+      (click)="cartClicked()"
+    >
+      <span
         class="material-icons"
         matBadge="{{ cartSize }}"
         matBadgePosition="below after"
         matBadgeColor="accent"
+
     >
         shopping_bag
       </span>
@@ -63,3 +68,4 @@
     </div>
   </mat-toolbar>
 </p>
+
