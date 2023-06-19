@@ -1,4 +1,4 @@
-import { Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { Observable } from 'rxjs';
 import { CartContentDTO } from '../model/cartcontent/cart-contentDTO';
 import { CartContentService } from '../service/cartcontent/cart-content.service';
@@ -19,6 +19,7 @@ export class SidecartComponent implements OnInit {
   @Input() getCartValue: boolean = false;
 
   @Input() getlogValue:boolean = false;
+  @Output() carCount = new EventEmitter<number>;
   items_:any;
   warenkorbID:any;
   warenkorbinhaltID:any;
@@ -37,7 +38,7 @@ export class SidecartComponent implements OnInit {
               product.produktID.produktname,
               product.produktID.produktbeschreibung,
               product.produktID.preis,
-              product.produktID.bild), 
+              product.produktID.bild),
           anzahl: product.anzahl,
           warenkorbinhaltID: product.warenkorbinhaltID,
           warenkorbID: product.warenkorbID
@@ -45,7 +46,7 @@ export class SidecartComponent implements OnInit {
       }
     })
     this.searchValue = '';
-    
+
   }
   receiditems($event){
     let input = true
@@ -73,10 +74,18 @@ export class SidecartComponent implements OnInit {
         this.items_.slice(-1)[0].warenkorbID,
         this.items_.slice(-1)[0].product.produktID,
         this.items_.slice(-1)[0].anzahl))
-        
+
     }
+    this.sendCartCount()
+  }
+  sendCartCount(){
+    let count= 0
+    for (let elt of this.items_){
+      count += elt.anzahl
+    }
+    this.carCount.emit(count)
   }
   ngOnInit() {
-      
+
   }
 }

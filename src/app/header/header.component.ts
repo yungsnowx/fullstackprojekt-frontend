@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { Observable } from 'rxjs';
 import { CartContentDTO } from '../model/cartcontent/cart-contentDTO';
 import { CartContentService } from '../service/cartcontent/cart-content.service';
@@ -13,15 +13,15 @@ export class HeaderComponent implements OnInit {
   private cartContentService: CartContentService;
   public cartContents: Observable<CartContentDTO[]>;
   public cartSize: number;
-
+  @Input() cartCount:number;
   constructor(cartContentService: CartContentService) {
     this.cartContentService = cartContentService;
     this.cartContents = cartContentService.listCartContentByCartId(StaticVars.cartIdInUse);
-
+    this.cartCount = 0
     this.cartSize = 0;
     this.cartContents.forEach((cartContent) => {
       cartContent.forEach((content) => {
-        this.cartSize += content.anzahl;
+        this.cartCount += content.anzahl;
       });
     });
   }
@@ -36,7 +36,7 @@ export class HeaderComponent implements OnInit {
     this.searchTextChanged.emit(this.enteredSearchValue.toLowerCase());
   }
 
-  
+
   showCart: boolean = false;
   showLog:boolean = false;
   @Output()
