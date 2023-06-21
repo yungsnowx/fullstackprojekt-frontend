@@ -1,0 +1,9 @@
+{
+  "hosting": [
+    {
+      "target": "fullstackprojekt-frontend",
+      "source": ".",
+      "frameworksBackend": {}
+    }
+  ]
+}
