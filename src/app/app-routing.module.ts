@@ -9,9 +9,6 @@ const routes: Routes = [
     path: "log_in", component: LogInComponent
   },
   {
-    path: "", component: MainscreenComponent
-  },
-  {
     path: "sign_up", component: SignUpComponent
   }
 ];

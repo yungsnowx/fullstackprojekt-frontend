@@ -21,6 +21,8 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-  <router-outlet></router-outlet>
+    <app-mainscreen *ngIf=" currentPath== '/' " [searchValue]="searchValue"></app-mainscreen>
+    <router-outlet *ngIf=" currentPath != '/' "></router-outlet>
   </mat-sidenav-content>
+
 </mat-sidenav-container>
