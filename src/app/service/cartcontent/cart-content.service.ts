@@ -34,7 +34,6 @@ export class CartContentService {
   public addCartContent(cartContent:CartContentDTO){
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     console.log("execte an addCart");
-    console.log(cartContent.get())
     return this.httpClient.post(this.url,cartContent.get()).subscribe()
   }
 }

@@ -22,11 +22,8 @@ export class AppComponent {
   }
   logToggle(value:boolean){
     this.log = value;
-    console.log(this.log)
   }
   receivedCountCart(value:number){
     this.countCart = value;
-    console.log(this.countCart)
-
   }
 }

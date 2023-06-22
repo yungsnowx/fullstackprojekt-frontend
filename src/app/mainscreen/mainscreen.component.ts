@@ -21,7 +21,6 @@ export class MainscreenComponent implements OnInit {
     this.product = new ProductDTO(0, 'Test', '123', 13.99, '');
     this.productService = productService;
     this.products = productService.listProducts();
-    console.log(this.products)
     this.searchValue = '';
   }
 

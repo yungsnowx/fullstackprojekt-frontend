@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, isEmpty } from 'rxjs';
 import { CartContentDTO } from '../model/cartcontent/cart-contentDTO';
 import { CartContentService } from '../service/cartcontent/cart-content.service';
 import { StaticVars } from '../config/static-vars';
@@ -17,7 +17,7 @@ export class SidecartComponent implements OnInit {
   @Input() searchValue: string = '';
 
   @Input() getCartValue: boolean = false;
-
+  input:boolean
   @Input() getlogValue:boolean = false;
   @Output() carCount = new EventEmitter<number>;
   items_:any;
@@ -27,9 +27,7 @@ export class SidecartComponent implements OnInit {
     this.items_ = []
     this.cartContentService = cartContentService;
     this.cartContents = cartContentService.listCartContentByCartId(StaticVars.cartIdInUse);
-    //this.cartContents = cartContentService.listCarts()
     this.cartContents.subscribe(produkten => {
-      console.log(produkten)
       this.warenkorbID = produkten[0].warenkorbID
       this.warenkorbinhaltID = produkten[0].warenkorbinhaltID
       for(let product of produkten ){
@@ -44,39 +42,53 @@ export class SidecartComponent implements OnInit {
           warenkorbID: product.warenkorbID
           })
       }
+      console.log(this.items_)
     })
     this.searchValue = '';
 
   }
   receiditems($event){
-    let input = true
-    for (let elt  of this.items_){
-      if(elt.product.produktname == $event.produktname){
-        elt.anzahl ++;
-        this.cartContentService.updateCartContent(new CartContentDTO(
-          elt.warenkorbinhaltID,
-          elt.warenkorbID,
-          elt.product.produktID,
-          elt.anzahl))
-        input = false
-      }
-    }
-    if(input){
-      this.items_.push({
-        product: $event,
-        anzahl: 1,
-        warenkorbinhaltID: this.warenkorbinhaltID,
-        warenkorbID: this.warenkorbID
-      })
-      console.log("asd",this.items_.slice(-1))
-        this.cartContentService.addCartContent(new CartContentDTO(
-        this.items_.slice(-1)[0].warenkorbinhaltID,
-        this.items_.slice(-1)[0].warenkorbID,
-        this.items_.slice(-1)[0].product.produktID,
-        this.items_.slice(-1)[0].anzahl))
+    this.input = true 
+    let info = this.cartContentService.listCarts()
+      info.subscribe( data =>{
+        for(let elt of this.items_){
+          if(elt.product.produktname == $event.produktname){
+            for(let dt of data){
+              if(dt.produktID == elt.product.produktID && dt.warenkorbID == elt.warenkorbID){
+                elt.anzahl++;
+                this.cartContentService.updateCartContent(new CartContentDTO(
+                  dt.warenkorbinhaltID,
+                  elt.warenkorbID,
+                  elt.product.produktID,
+                  elt.anzahl
+                ))
+                this.input = false
+                console.log(1)
+                console.log(this.input)
+                break 
+              }
+            }
+          }
+          
+        
+      } 
+      console.log(this.input)
+        if(this.input){
+          this.items_.push({
+          product: $event,
+          anzahl: 1,
+          warenkorbinhaltID: this.warenkorbinhaltID,
+          warenkorbID: this.warenkorbID
+          })
+          this.cartContentService.addCartContent(new CartContentDTO(
+          this.items_.slice(-1)[0].warenkorbinhaltID,
+          this.items_.slice(-1)[0].warenkorbID,
+          this.items_.slice(-1)[0].product.produktID,
+          this.items_.slice(-1)[0].anzahl))     
+        } 
+        this.sendCartCount()
 
-    }
-    this.sendCartCount()
+    })
   }
   sendCartCount(){
     let count= 0
