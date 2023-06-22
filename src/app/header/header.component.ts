@@ -13,6 +13,7 @@ export class HeaderComponent implements OnInit {
   private cartContentService: CartContentService;
   public cartContents: Observable<CartContentDTO[]>;
   public cartSize: number;
+  
   @Input() cartCount:number;
   constructor(cartContentService: CartContentService) {
     this.cartContentService = cartContentService;
