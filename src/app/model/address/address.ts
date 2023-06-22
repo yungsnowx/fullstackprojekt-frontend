@@ -1,7 +1,8 @@
-export interface Address{
-    strasse?:string;
-    hausnummer?:string;
-    ort?:string;
-    plz?:string;
-    land?:string;
+export interface Address {
+  adresseID: number;
+  strasse: string;
+  hausnummer: string;
+  ort: string;
+  plz: string;
+  land: string;
 }

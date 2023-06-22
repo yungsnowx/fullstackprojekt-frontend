@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "fullstack-projekt": {
+      "hosting": {
+        "fullstackprojekt-frontend": [
+          "fullstack-projekt"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "fullstack-projekt"
+  }
+}

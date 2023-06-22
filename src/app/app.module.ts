@@ -3,6 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 
+
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -23,10 +24,13 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MainscreenComponent } from './mainscreen/mainscreen.component';
 import { ProductComponent } from './product/product.component';
 import { LogInComponent } from './log-in/log-in.component';
-import { SignInComponent } from './sign-in/sign-in.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { SidecartComponent } from './sidecart/sidecart.component';
 import { MatListModule } from '@angular/material/list';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideAuth,getAuth } from '@angular/fire/auth';
 
 registerLocaleData(localeDe);
 
@@ -37,7 +41,7 @@ registerLocaleData(localeDe);
     ProductComponent,
     MainscreenComponent,
     LogInComponent,
-    SignInComponent,
+    SignUpComponent,
     SidecartComponent,
 
   ],
@@ -60,6 +64,8 @@ registerLocaleData(localeDe);
     MatMenuModule,
     MatSidenavModule,
     MatListModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
   ],
   providers: [
     {
