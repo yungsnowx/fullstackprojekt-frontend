@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { CartContentDTO } from '../model/cartcontent/cart-contentDTO';
 import { CartContentService } from '../service/cartcontent/cart-content.service';
 import { StaticVars } from '../config/static-vars';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidecart',
@@ -17,10 +18,17 @@ export class SidecartComponent implements OnInit {
 
   @Input() getCartValue: boolean = false;
 
-  constructor(cartContentService: CartContentService) {
+  currentPath: string = '';
+
+  constructor(cartContentService: CartContentService, private router: Router) {
     this.cartContentService = cartContentService;
     this.cartContents = cartContentService.listCartContentByCartId(StaticVars.cartIdInUse);
     this.searchValue = '';
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.currentPath = event.url;
+      }
+    });
   }
 
   ngOnInit() {}
