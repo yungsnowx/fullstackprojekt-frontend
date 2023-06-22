@@ -24,7 +24,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MainscreenComponent } from './mainscreen/mainscreen.component';
 import { ProductComponent } from './product/product.component';
 import { LogInComponent } from './log-in/log-in.component';
-import { SignInComponent } from './sign-in/sign-in.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { SidecartComponent } from './sidecart/sidecart.component';
 import { MatListModule } from '@angular/material/list';
@@ -41,7 +41,7 @@ registerLocaleData(localeDe);
     ProductComponent,
     MainscreenComponent,
     LogInComponent,
-    SignInComponent,
+    SignUpComponent,
     SidecartComponent,
 
   ],

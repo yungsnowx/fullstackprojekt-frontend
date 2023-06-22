@@ -1,4 +1,10 @@
-import {Auth, sendPasswordResetEmail, signOut,signInWithEmailAndPassword} from '@angular/fire/auth';
+import {
+  Auth,
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signOut
+} from '@angular/fire/auth';
 import {Injectable} from "@angular/core";
 
 @Injectable({
@@ -24,12 +30,22 @@ export class FirebaseAuthService {
 
 
   logIn(email: string, password: string) {
-    signInWithEmailAndPassword(this.auth,email, password)
+    signInWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        console.log(user);
-      }
-    )
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+        }
+      )
+  }
+
+  signUp(email: string, password: string) {
+    createUserWithEmailAndPassword(this.auth, email, password)
+      .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+        }
+      );
   }
 }

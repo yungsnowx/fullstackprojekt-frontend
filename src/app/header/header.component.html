@@ -47,12 +47,31 @@
       </span>
     </button>
     <button
-      mat-icon-button
+      *ngIf="this.firebaseAuthService.getFirebaseUser() == null"
+      mat-flat-button
       aria-label="login"
       matTooltip="Anmelden"
       [routerLink]="'log_in'"
-    >
-      <span class="material-icons"> person </span>
+      class="userButton"
+    >Anmelden
+    </button>
+    <button
+      *ngIf="this.firebaseAuthService.getFirebaseUser() == null"
+      mat-flat-button
+      aria-label="signup"
+      matTooltip="Registrieren"
+      [routerLink]="'sign_up'"
+      class="userButton"
+    >Registrieren
+    </button>
+    <button
+      *ngIf="this.firebaseAuthService.getFirebaseUser() != null"
+      mat-flat-button
+      aria-label="logout"
+      matTooltip="Abmelden"
+      (click)="logOut()"
+      class="userButton">
+      Abmelden
     </button>
 
   </div>
