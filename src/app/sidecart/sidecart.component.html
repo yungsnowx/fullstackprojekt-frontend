@@ -32,10 +32,9 @@
     </mat-nav-list>
   </mat-sidenav>
 
-  <mat-sidenav-content *ngIf="!getlogValue">
-    <app-mainscreen [searchValue]="searchValue"  (itemsProductEvent)="receiditems($event)"></app-mainscreen>
+  <mat-sidenav-content>
+    <app-mainscreen *ngIf=" currentPath== '/' " [searchValue]="searchValue" (itemsProductEvent)="receiditems($event)"></app-mainscreen>
+    <router-outlet *ngIf=" currentPath != '/' "></router-outlet>
   </mat-sidenav-content>
-  <mat-sidenav-content *ngIf="getlogValue">
-    <app-log-in></app-log-in>
-  </mat-sidenav-content>
+
 </mat-sidenav-container>

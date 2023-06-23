@@ -4,6 +4,8 @@ import { CartContentDTO } from '../model/cartcontent/cart-contentDTO';
 import { CartContentService } from '../service/cartcontent/cart-content.service';
 import { StaticVars } from '../config/static-vars';
 import { ProductDTO } from '../model/product/productDTO';
+import { NavigationEnd, Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-sidecart',
@@ -17,13 +19,15 @@ export class SidecartComponent implements OnInit {
   @Input() searchValue: string = '';
 
   @Input() getCartValue: boolean = false;
+
   input:boolean
   @Input() getlogValue:boolean = false;
   @Output() carCount = new EventEmitter<number>;
   items_:any;
   warenkorbID:any;
   warenkorbinhaltID:any;
-  constructor(cartContentService: CartContentService) {
+  currentPath: string = '';
+  constructor(cartContentService: CartContentService, private router: Router) {
     this.items_ = []
     this.cartContentService = cartContentService;
     this.cartContents = cartContentService.listCartContentByCartId(StaticVars.cartIdInUse);
@@ -46,6 +50,11 @@ export class SidecartComponent implements OnInit {
     })
     this.searchValue = '';
 
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.currentPath = event.url;
+      }
+    });
   }
   receiditems($event){
     this.input = true 

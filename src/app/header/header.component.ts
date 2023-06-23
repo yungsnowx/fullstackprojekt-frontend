@@ -1,8 +1,11 @@
+
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import { Observable } from 'rxjs';
-import { CartContentDTO } from '../model/cartcontent/cart-contentDTO';
-import { CartContentService } from '../service/cartcontent/cart-content.service';
-import { StaticVars } from '../config/static-vars';
+import {Observable} from 'rxjs';
+import {CartContentDTO} from '../model/cartcontent/cart-contentDTO';
+import {CartContentService} from '../service/cartcontent/cart-content.service';
+import {StaticVars} from '../config/static-vars';
+import {FirebaseAuthService} from "../service/firebase/firebase.service";
+
 
 @Component({
   selector: 'app-header',
@@ -15,7 +18,10 @@ export class HeaderComponent implements OnInit {
   public cartSize: number;
   
   @Input() cartCount:number;
-  constructor(cartContentService: CartContentService) {
+  firebaseAuthService: FirebaseAuthService
+  constructor(cartContentService: CartContentService, firebaseAuthService: FirebaseAuthService) {
+    this.firebaseAuthService = firebaseAuthService;
+
     this.cartContentService = cartContentService;
     this.cartContents = cartContentService.listCartContentByCartId(StaticVars.cartIdInUse);
     this.cartCount = 0
@@ -33,6 +39,7 @@ export class HeaderComponent implements OnInit {
 
   @Output()
   searchTextChanged: EventEmitter<string> = new EventEmitter<string>();
+
   onSearchTextChanged() {
     this.searchTextChanged.emit(this.enteredSearchValue.toLowerCase());
   }
@@ -42,6 +49,7 @@ export class HeaderComponent implements OnInit {
   showLog:boolean = false;
   @Output()
   toggled: EventEmitter<any> = new EventEmitter<any>();
+
   cartClicked() {
     if (this.showCart == false) {
       this.showCart = true;
@@ -51,16 +59,12 @@ export class HeaderComponent implements OnInit {
     this.toggled.emit(this.showCart);
   }
 
-  @Output()
-  log: EventEmitter<boolean> = new EventEmitter<boolean>();
-  logClicked(){
-    if(this.showLog == false){
-      this.showLog = true;
-    }
-    else{
-      this.showLog = false;
-    }
-    this.log.emit(this.showLog)
+
+  logOut() {
+    this.firebaseAuthService.logout();
   }
-  ngOnInit(): void {}
+
+  ngOnInit(): void {
+    console.log(this.firebaseAuthService.getFirebaseUser());
+  }
 }

@@ -1,23 +1,21 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {LogInComponent} from "./log-in/log-in.component";
-import { MainscreenComponent } from './mainscreen/mainscreen.component';
-import { SignInComponent } from './sign-in/sign-in.component';
-const routes: Routes = [
+import {MainscreenComponent} from './mainscreen/mainscreen.component';
+import {SignUpComponent} from './sign-up/sign-up.component';
 
+const routes: Routes = [
   {
-    path: "log_in", component:  LogInComponent
+    path: "log_in", component: LogInComponent
   },
   {
-    path: "", component:  MainscreenComponent
-  },
-  {
-    path:"sign_in",component:SignInComponent
+    path: "sign_up", component: SignUpComponent
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes,{useHash:true})],
+  imports: [RouterModule.forRoot(routes, {useHash: true})],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

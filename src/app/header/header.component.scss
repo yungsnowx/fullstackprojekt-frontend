@@ -3,7 +3,20 @@ mat-toolbar {
   display: flex;
   flex-direction: row;
 }
-a{
+
+#toolbar-elements {
+  display: flex;
+  flex-direction: row;
+}
+
+.userButton {
+  justify-self: center;
+  align-self: center;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+a {
   text-decoration: none;
   color: white;
   :hover{
