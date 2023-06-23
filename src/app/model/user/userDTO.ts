@@ -1,14 +1,12 @@
 import {User} from "./user";
 
 export class UserDTO implements  User{
+  public userIDFireAuth?:number
   public vorname?:string;
   public nachname?:string;
-  public email?:string;
-  public passwort?: string;
   public isAdmin?:boolean;
-  constructor(email?:string, passwort?:string,vorname?:string,nachname?:string,isAdmin?:boolean) {
-    this.email = email;
-    this.passwort = passwort;
+  constructor(userIDFireAuth?:number,vorname?:string,nachname?:string,isAdmin?:boolean) {
+    this.userIDFireAuth = userIDFireAuth;
     this.vorname = vorname;
     this.nachname = nachname;
     this.isAdmin = isAdmin;
@@ -16,8 +14,7 @@ export class UserDTO implements  User{
   }
   get_user(){
     return{
-      email:this.email,
-      passwort:this.passwort,
+      userIDFireAuth: this.userIDFireAuth, 
       vorname: this.vorname,
       nachname: this.nachname,
       isAdmin:this.isAdmin
