@@ -5,8 +5,8 @@ export class UserDTO implements  User{
   public vorname?:string;
   public nachname?:string;
   public isAdmin?:boolean;
-  constructor(userIDFireAuth?:number,vorname?:string,nachname?:string,isAdmin?:boolean) {
-    this.userID = userIDFireAuth;
+  constructor(userID?:number,vorname?:string,nachname?:string,isAdmin?:boolean) {
+    this.userID = userID;
     this.vorname = vorname;
     this.nachname = nachname;
     this.isAdmin = isAdmin;
@@ -14,7 +14,7 @@ export class UserDTO implements  User{
   }
   get_user(){
     return{
-      userIDFireAuth: this.userID, 
+      userID: this.userID, 
       vorname: this.vorname,
       nachname: this.nachname,
       isAdmin:this.isAdmin
