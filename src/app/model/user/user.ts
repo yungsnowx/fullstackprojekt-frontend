@@ -1,5 +1,5 @@
 export  interface  User{
-  userIDFireAuth?:number;
+  userID?:number;
   vorname?:string;
   nachname?:string;
   isAdmin?:boolean;
