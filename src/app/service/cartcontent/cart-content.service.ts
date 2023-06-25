@@ -11,12 +11,12 @@ export class CartContentService {
   constructor(private httpClient: HttpClient) {}
 
   public listCarts(): Observable<CartContentDTO[]> {
-    console.log("execte an get all");
+    console.log("execute an get all");
     return this.httpClient.get<CartContentDTO[]>(this.url);
   }
 
   public listCartContentByCartId(id: number): Observable<CartContentDTO[]> {
-    console.log("execte an get by ID");
+    console.log("execute an get by ID");
     return this.httpClient.get<CartContentDTO[]>(
       `/warenkorbinhalt/warenkorb/${id}`
     );
@@ -24,7 +24,7 @@ export class CartContentService {
 
   public updateCartContent(cartContent: CartContentDTO){
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    console.log("execte an update");
+    console.log("execute an update");
     return this.httpClient.put(
       this.url,
       cartContent.getWithId(),
@@ -33,7 +33,7 @@ export class CartContentService {
   }
   public addCartContent(cartContent:CartContentDTO){
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    console.log("execte an addCart");
+    console.log("execute an addCart");
     return this.httpClient.post(this.url,cartContent.get()).subscribe()
   }
 }

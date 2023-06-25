@@ -20,9 +20,6 @@ export class AppComponent {
   cartToggle(value: boolean){
     this.cart = value;
   }
-  logToggle(value:boolean){
-    this.log = value;
-  }
   receivedCountCart(value:number){
     this.countCart = value;
   }

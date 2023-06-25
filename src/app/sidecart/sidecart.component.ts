@@ -21,21 +21,20 @@ export class SidecartComponent implements OnInit {
   @Input() getCartValue: boolean = false;
 
   input:boolean
-  @Input() getlogValue:boolean = false;
-  @Output() carCount = new EventEmitter<number>;
-  items_:any;
+  @Output() cartCount = new EventEmitter<number>;
+  items:any;
   warenkorbID:any;
   warenkorbinhaltID:any;
   currentPath: string = '';
   constructor(cartContentService: CartContentService, private router: Router) {
-    this.items_ = []
+    this.items = []
     this.cartContentService = cartContentService;
     this.cartContents = cartContentService.listCartContentByCartId(StaticVars.cartIdInUse);
-    this.cartContents.subscribe(produkten => {
-      this.warenkorbID = produkten[0].warenkorbID
-      this.warenkorbinhaltID = produkten[0].warenkorbinhaltID
-      for(let product of produkten ){
-        this.items_.push({
+    this.cartContents.subscribe(products => {
+      this.warenkorbID = products[0].warenkorbID
+      this.warenkorbinhaltID = products[0].warenkorbinhaltID
+      for(let product of products ){
+        this.items.push({
           product:new ProductDTO(product.produktID.produktID,
               product.produktID.produktname,
               product.produktID.produktbeschreibung,
@@ -46,7 +45,7 @@ export class SidecartComponent implements OnInit {
           warenkorbID: product.warenkorbID
           })
       }
-      console.log(this.items_)
+      console.log(this.items)
     })
     this.searchValue = '';
 
@@ -56,57 +55,50 @@ export class SidecartComponent implements OnInit {
       }
     });
   }
-  receiditems($event){
-    this.input = true 
+  receivedItems($event){
+    this.input = true
     let info = this.cartContentService.listCarts()
-      info.subscribe( data =>{
-        for(let elt of this.items_){
-          if(elt.product.produktname == $event.produktname){
-            for(let dt of data){
-              if(dt.produktID == elt.product.produktID && dt.warenkorbID == elt.warenkorbID){
-                elt.anzahl++;
+      info.subscribe( datas =>{
+        for(let product of this.items){
+          if(product.product.produktname == $event.produktname){
+            for(let data of datas){
+              if(data.produktID == product.product.produktID && data.warenkorbID == product.warenkorbID){
+                product.anzahl++;
                 this.cartContentService.updateCartContent(new CartContentDTO(
-                  dt.warenkorbinhaltID,
-                  elt.warenkorbID,
-                  elt.product.produktID,
-                  elt.anzahl
+                  data.warenkorbinhaltID,
+                  product.warenkorbID,
+                  product.product.produktID,
+                  product.anzahl
                 ))
                 this.input = false
-                console.log(1)
-                console.log(this.input)
-                break 
+                break
               }
             }
           }
-          
-        
-      } 
-      console.log(this.input)
+      }
         if(this.input){
-          this.items_.push({
+          this.items.push({
           product: $event,
           anzahl: 1,
           warenkorbinhaltID: this.warenkorbinhaltID,
           warenkorbID: this.warenkorbID
           })
           this.cartContentService.addCartContent(new CartContentDTO(
-          this.items_.slice(-1)[0].warenkorbinhaltID,
-          this.items_.slice(-1)[0].warenkorbID,
-          this.items_.slice(-1)[0].product.produktID,
-          this.items_.slice(-1)[0].anzahl))     
-        } 
+          this.items.slice(-1)[0].warenkorbinhaltID,
+          this.items.slice(-1)[0].warenkorbID,
+          this.items.slice(-1)[0].product.produktID,
+          this.items.slice(-1)[0].anzahl))
+        }
         this.sendCartCount()
 
     })
   }
   sendCartCount(){
     let count= 0
-    for (let elt of this.items_){
-      count += elt.anzahl
+    for (let product of this.items){
+      count += product.anzahl
     }
-    this.carCount.emit(count)
+    this.cartCount.emit(count)
   }
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 }

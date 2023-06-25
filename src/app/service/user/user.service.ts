@@ -33,7 +33,7 @@ export class UserService{
   }
   public updateUser(user:UserDTO){
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    console.log("execte an update");
+    console.log("execute an update");
     return this.httpClient.put(this.url,user.get_user(),{headers});
   }
   public deleteUser(id:number){

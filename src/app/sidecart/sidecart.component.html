@@ -5,21 +5,7 @@
     <hr />
 
     <mat-nav-list>
-      <!-- <div *ngFor="let cartContent of cartContents | async">
-        <div mat-list-item class="productsInCart">
-          <p>{{ cartContent.anzahl }}x&nbsp;</p>
-          <p>{{ cartContent.produktID.produktname }}</p>
-          <p>
-            {{
-              cartContent.produktID.preis * cartContent.anzahl
-                | currency : "EUR" : "€"
-            }}
-          </p>
-        </div>
-      </div> -->
-
-
-      <div *ngFor="let items of items_ ">
+      <div *ngFor="let items of items ">
         <div mat-list-item class="productsInCart">
           <p>{{ items.anzahl }}x&nbsp;</p>
           <p>{{ items.product.produktname }}</p>
@@ -33,7 +19,7 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <app-mainscreen *ngIf=" currentPath== '/' " [searchValue]="searchValue" (itemsProductEvent)="receiditems($event)"></app-mainscreen>
+    <app-mainscreen *ngIf=" currentPath== '/' " [searchValue]="searchValue" (itemsProductEvent)="receivedItems($event)"></app-mainscreen>
     <router-outlet *ngIf=" currentPath != '/' "></router-outlet>
   </mat-sidenav-content>
 

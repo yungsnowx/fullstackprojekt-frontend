@@ -15,8 +15,7 @@ import {FirebaseAuthService} from "../service/firebase/firebase.service";
 export class HeaderComponent implements OnInit {
   private cartContentService: CartContentService;
   public cartContents: Observable<CartContentDTO[]>;
-  public cartSize: number;
-  
+
   @Input() cartCount:number;
   firebaseAuthService: FirebaseAuthService
   constructor(cartContentService: CartContentService, firebaseAuthService: FirebaseAuthService) {
@@ -25,7 +24,6 @@ export class HeaderComponent implements OnInit {
     this.cartContentService = cartContentService;
     this.cartContents = cartContentService.listCartContentByCartId(StaticVars.cartIdInUse);
     this.cartCount = 0
-    this.cartSize = 0;
     this.cartContents.forEach((cartContent) => {
       cartContent.forEach((content) => {
         this.cartCount += content.anzahl;
