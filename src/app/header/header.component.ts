@@ -1,9 +1,11 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Observable} from 'rxjs';
 import {CartContentDTO} from '../model/cartcontent/cart-contentDTO';
 import {CartContentService} from '../service/cartcontent/cart-content.service';
 import {StaticVars} from '../config/static-vars';
 import {FirebaseAuthService} from "../service/firebase/firebase.service";
+
 
 @Component({
   selector: 'app-header',
@@ -13,18 +15,18 @@ import {FirebaseAuthService} from "../service/firebase/firebase.service";
 export class HeaderComponent implements OnInit {
   private cartContentService: CartContentService;
   public cartContents: Observable<CartContentDTO[]>;
-  public cartSize: number;
-  firebaseAuthService: FirebaseAuthService
 
+  @Input() cartCount:number;
+  firebaseAuthService: FirebaseAuthService
   constructor(cartContentService: CartContentService, firebaseAuthService: FirebaseAuthService) {
     this.firebaseAuthService = firebaseAuthService;
+
     this.cartContentService = cartContentService;
     this.cartContents = cartContentService.listCartContentByCartId(StaticVars.cartIdInUse);
-
-    this.cartSize = 0;
+    this.cartCount = 0
     this.cartContents.forEach((cartContent) => {
       cartContent.forEach((content) => {
-        this.cartSize += content.anzahl;
+        this.cartCount += content.anzahl;
       });
     });
   }
@@ -42,7 +44,7 @@ export class HeaderComponent implements OnInit {
 
 
   showCart: boolean = false;
-
+  showLog:boolean = false;
   @Output()
   toggled: EventEmitter<any> = new EventEmitter<any>();
 
@@ -54,6 +56,7 @@ export class HeaderComponent implements OnInit {
     }
     this.toggled.emit(this.showCart);
   }
+
 
   logOut() {
     this.firebaseAuthService.logout();

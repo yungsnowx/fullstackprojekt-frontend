@@ -1,12 +1,13 @@
-<mat-toolbar color="primary">
-  <a
-    routerLink=""
-    routerLinkActive="active"
-    [routerLinkActiveOptions]="{ exact: true }"
-  >
-    <span> Webshop </span>
-  </a>
-  <div id="toolbar-elements">
+ <mat-toolbar color="primary">
+   <a
+     routerLink=""
+     routerLinkActive="active"
+     [routerLinkActiveOptions]="{ exact: true }"
+   >
+     <span> Webshop </span>
+   </a>
+   <div id="toolbar-elements">
+
     <mat-form-field
       *ngIf="showDiv"
       color="primary"
@@ -20,7 +21,9 @@
         (input)="onSearchTextChanged()"
         matInput
       />
-    </mat-form-field>
+
+      </mat-form-field>
+
     <button
       id="searchbutton"
       (click)="showDiv = !showDiv"
@@ -28,7 +31,9 @@
       aria-label="Suche"
       matTooltip="Suche starten"
     >
-      <span class="material-icons">search</span>
+
+        <span class="material-icons">search</span>
+
     </button>
 
     <button
@@ -39,13 +44,15 @@
     >
       <span
         class="material-icons"
-        matBadge="{{ cartSize }}"
+        matBadge="{{ cartCount }}"
         matBadgePosition="below after"
         matBadgeColor="accent"
-      >
+
+    >
         shopping_bag
       </span>
     </button>
+
     <button
       *ngIf="this.firebaseAuthService.getFirebaseUser() == null"
       mat-flat-button
@@ -77,3 +84,4 @@
   </div>
 
 </mat-toolbar>
+

@@ -10,11 +10,14 @@
       "
     >
       <app-product
+        id="{{product.produktID}}"
         image="{{ product.bild }}"
         title="{{ product.produktname }}"
         description="{{ product.produktbeschreibung }}"
         price="{{ product.preis }}"
         class="product"
+        (messageEvent)="receiveMessage($event)"
+        
       ></app-product>
     </div>
   </div>

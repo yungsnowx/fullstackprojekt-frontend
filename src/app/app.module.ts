@@ -64,8 +64,10 @@ registerLocaleData(localeDe);
     MatMenuModule,
     MatSidenavModule,
     MatListModule,
+    NgIf,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
+
   ],
   providers: [
     {
