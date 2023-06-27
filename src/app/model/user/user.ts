@@ -1,7 +1,6 @@
-export  interface  User{
-  userID?:number;
-  vorname?:string;
-  nachname?:string;
-  isAdmin?:boolean;
- 
+export interface User {
+  userID?: string;
+  vorname?: string;
+  nachname?: string;
+  isAdmin?: boolean;
 }
