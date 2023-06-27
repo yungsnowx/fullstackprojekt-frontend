@@ -31,6 +31,7 @@ import { MatListModule } from '@angular/material/list';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';
+import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
 
 registerLocaleData(localeDe);
 
@@ -64,6 +65,7 @@ registerLocaleData(localeDe);
     MatMenuModule,
     MatSidenavModule,
     MatListModule,
+    MatSnackBarModule,
     NgIf,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
