@@ -18,4 +18,20 @@ export class CartContentDTO implements CartContent {
     this.produktID = produktID;
     this.anzahl = anzahl;
   }
+  get(){
+    return  {
+      
+      warenkorbID: this.warenkorbID,
+      produktID: this.produktID,
+      anzahl:this.anzahl
+    }
+  }
+  getWithId(){
+    return{
+      warenkorbinhaltID : this.warenkorbinhaltID,
+      warenkorbID: this.warenkorbID,
+      produktID: this.produktID,
+      anzahl:this.anzahl
+    }
+  }
 }

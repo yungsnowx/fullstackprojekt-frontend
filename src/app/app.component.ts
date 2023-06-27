@@ -15,8 +15,12 @@ export class AppComponent {
   }
 
   cart: boolean = false;
-
+  log:boolean = false;
+  countCart:number = 0
   cartToggle(value: boolean){
     this.cart = value;
+  }
+  receivedCountCart(value:number){
+    this.countCart = value;
   }
 }

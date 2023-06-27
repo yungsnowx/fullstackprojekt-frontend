@@ -1,2 +1,2 @@
-<app-header (searchTextChanged)="onSearchTextEntered($event)" (toggled)="cartToggle($event)"></app-header>
-<app-sidecart [searchValue]="seachText" [getCartValue]="cart"></app-sidecart>
+<app-header (searchTextChanged)="onSearchTextEntered($event)" (toggled)="cartToggle($event)"  [cartCount]="countCart"></app-header>
+<app-sidecart [searchValue]="seachText" [getCartValue]="cart"  (cartCount)="receivedCountCart($event)"></app-sidecart>

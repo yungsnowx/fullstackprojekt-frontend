@@ -1,108 +1,111 @@
 <h1>
-    Anmeldung
+  Anmeldung
 </h1>
-<form (submit)="signUp()" >
-    <div class="User_information">
-        <h2>
-            Kunde Informationen
-        </h2>
-        <mat-form-field>
-            <mat-label>
-                Nachname
-            </mat-label>
-            <input matInput placeholder="Müller" [formControl]="nachname" requiered>
-            <mat-error *ngIf="nachname.invalid">{{getErrorMessage("nachname",nachname)}}</mat-error>
+<form (submit)="signUp()">
+  <div class="User_information">
+    <h2>
+      Kundeninformationen
+    </h2>
+    <mat-form-field>
+      <mat-label>
+        Vorname
+      </mat-label>
+      <input matInput placeholder="Max" [formControl]="vorname" requiered>
+      <mat-error *ngIf="vorname.invalid">{{getErrorMessage("Vorname", vorname)}}</mat-error>
 
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>
-                Vorname
-            </mat-label>
-            <input matInput placeholder="Max" [formControl]="vorname" requiered>
-            <mat-error *ngIf="vorname.invalid">{{getErrorMessage("vorname",vorname  )}}</mat-error>
+    </mat-form-field>
 
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>
-                Email
-            </mat-label>
-            <input matInput placeholder="Muster" [formControl]="email" requiered>
-            <mat-error *ngIf="email.invalid">{{getErrorMessage("email",email)}}</mat-error>
+    <mat-form-field>
+      <mat-label>
+        Nachname
+      </mat-label>
+      <input matInput placeholder="Müller" [formControl]="nachname" requiered>
+      <mat-error *ngIf="nachname.invalid">{{getErrorMessage("Nachname", nachname)}}</mat-error>
 
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>
-                Passwort
-            </mat-label>
-            <input matInput [type]="hide ? 'password':'text'" [formControl]="passwort"  required>
-            <mat-error *ngIf="passwort.invalid">{{getErrorMessage("passwort",passwort)}}</mat-error>
+    </mat-form-field>
 
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>
-                Wiederholung des Passwortes
-            </mat-label>
-            <input matInput [type]="hide ? 'password':'text'" [formControl]="wiederPass"  required>
-            <mat-error *ngIf="wiederPass.invalid">{{getErrorMessage("wiederholend Passwort",wiederPass)}}</mat-error>
+    <mat-form-field>
+      <mat-label>
+        Email
+      </mat-label>
+      <input matInput placeholder="Muster" [formControl]="email" requiered>
+      <mat-error *ngIf="email.invalid">{{getErrorMessage("Email", email)}}</mat-error>
 
-        </mat-form-field>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>
+        Passwort
+      </mat-label>
+      <input matInput [type]="hide ? 'password':'text'" [formControl]="passwort" required>
+      <mat-error *ngIf="passwort.invalid">{{getErrorMessage("Passwort", passwort)}}</mat-error>
+
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>
+        Passwort wiederholen
+      </mat-label>
+      <input matInput [type]="hide ? 'password':'text'" [formControl]="wiederPass" required>
+      <mat-error *ngIf="wiederPass.invalid">{{getErrorMessage("Passwort wiederholen", wiederPass)}}</mat-error>
+
+    </mat-form-field>
+  </div>
+  <div class="Address_information">
+    <h2>
+      Adressinformationen
+    </h2>
+    <div class="info_set">
+      <mat-form-field id="strasse">
+        <mat-label>
+          Straße
+        </mat-label>
+        <input matInput placeholder="bebelstraße" [formControl]="strasse" required>
+        <mat-error *ngIf="strasse.invalid">{{getErrorMessage("Straße", strasse)}}</mat-error>
+
+      </mat-form-field>
+
+      <mat-form-field id="hausnummer">
+        <mat-label>
+          Hausnummer
+        </mat-label>
+        <input matInput placeholder="12A" [maxLength]="5" [formControl]="hausnummer" required>
+        <mat-error *ngIf="hausnummer.invalid">{{getErrorMessage("Hausnummer", hausnummer)}}</mat-error>
+
+      </mat-form-field>
+
     </div>
-    <div class="Address_information">
-        <h2>
-            Address Informationen
-        </h2>
-        <div class="info_set">
-            <mat-form-field id="strasse">
-                <mat-label>
-                    Strasse
-                </mat-label>
-                <input matInput placeholder="bebelstraße" [formControl]="strasse" required>
-                <mat-error *ngIf="strasse.invalid">{{getErrorMessage("strasse",strasse  )}}</mat-error>
+    <div class="info_set">
 
-            </mat-form-field>
+      <mat-form-field id="ort">
+        <mat-label>
+          Ort
+        </mat-label>
+        <input matInput placeholder="Stuttgart" [formControl]="ort" required>
+        <mat-error *ngIf="ort.invalid">{{getErrorMessage("Ort", ort)}}</mat-error>
+      </mat-form-field>
 
-            <mat-form-field id="hausnummer">
-                <mat-label>
-                    Hausnummer
-                </mat-label>
-                <input matInput placeholder="12A" [maxLength]="5" [formControl]="hausnummer" required>
-            <mat-error *ngIf="hausnummer.invalid">{{getErrorMessage("hausnummer",hausnummer  )}}</mat-error>
+      <mat-form-field id="plz">
+        <mat-label>
+          PLZ
+        </mat-label>
+        <input matInput type="number" placeholder="67549" [formControl]="plz" [minLength]=1 [maxLength]="5" required>
+        <mat-error *ngIf="plz.invalid">{{getErrorMessage("PLZ", plz)}}</mat-error>
 
-            </mat-form-field>
+      </mat-form-field>
 
-        </div>
-        <div class="info_set">
+    </div>
 
-            <mat-form-field id="ort">
-                <mat-label>
-                    Ort
-                </mat-label>
-                <input matInput placeholder="Stutgart" [formControl]="ort" required>
-            <mat-error *ngIf="ort.invalid">{{getErrorMessage("ort",ort  )}}</mat-error>
-            </mat-form-field>
+    <mat-form-field>
+      <mat-label>
+        Land
+      </mat-label>
+      <input matInput [formControl]="land" required>
+      <mat-error *ngIf="land.invalid">{{getErrorMessage("land", land)}}</mat-error>
 
-            <mat-form-field id="plz">
-                <mat-label>
-                    PLZ
-                </mat-label>
-                <input matInput type= "number" placeholder="67549" [formControl]="plz" [minLength]= 1 [maxLength]="5" required>
-            <mat-error *ngIf="plz.invalid">{{getErrorMessage("plz",plz  )}}</mat-error>
+    </mat-form-field>
 
-            </mat-form-field>
-
-        </div>
-
-        <mat-form-field>
-            <mat-label>
-                Land
-            </mat-label>
-            <input matInput placeholder="Frankreich" [formControl]="land" required>
-            <mat-error *ngIf="land.invalid">{{getErrorMessage("land",land  )}}</mat-error>
-
-        </mat-form-field>
-
-   </div> -->
-   <button mat-flat-button
-   color="primary"
-   type="submit"> herstellen</button>
+  </div>
+  <button mat-flat-button
+          color="primary"
+          type="submit">Registrieren
+  </button>
 </form>

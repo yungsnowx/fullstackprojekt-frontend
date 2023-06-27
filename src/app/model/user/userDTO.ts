@@ -5,12 +5,13 @@ export class UserDTO implements  User{
   public vorname?:string;
   public nachname?:string;
   public isAdmin?:boolean;
+
   constructor(userID?:number,vorname?:string,nachname?:string,isAdmin?:boolean) {
     this.userID = userID;
     this.vorname = vorname;
     this.nachname = nachname;
     this.isAdmin = isAdmin;
-   
+    this.userID = userID;
   }
   get_user(){
     return{

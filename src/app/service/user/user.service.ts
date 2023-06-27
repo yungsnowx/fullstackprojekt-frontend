@@ -16,10 +16,10 @@ export class UserService{
     console.log("execute listUser");
     return this.httpClient.get<UserDTO[]>(this.url);
   }
-  public logIn(user:UserDTO){
+  public logIn(user:UserDTO):Observable<UserDTO>{
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     console.log("execute Log in");
-    return this.httpClient.post(this.url+"/log_in",user.get_user(),{headers})
+    return this.httpClient.post<UserDTO>(this.url+"/log_in",user.get_user(),{headers})
   }
   public sign(user:UserDTO){
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
@@ -33,7 +33,7 @@ export class UserService{
   }
   public updateUser(user:UserDTO){
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    console.log("execte an update");
+    console.log("execute an update");
     return this.httpClient.put(this.url,user.get_user(),{headers});
   }
   public deleteUser(id:number){
