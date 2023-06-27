@@ -48,7 +48,7 @@ export class SignUpComponent implements OnInit {
     if (object.hasError('required')) {
       return `${text} ist leer`;
     }
-    return object.hasError('email') ? 'keine korrekte Email' : "";
+    return object.hasError('email') ? 'Keine korrekte E-Mail' : "";
   }
 
   signUp() {

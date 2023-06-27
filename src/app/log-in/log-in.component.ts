@@ -32,7 +32,7 @@ export class LogInComponent implements OnInit {
     if (object.hasError('required')) {
       return `${text} ist leer`;
     }
-    return object.hasError('email') ? 'Keine korrekte Email' : "";
+    return object.hasError('email') ? 'Keine korrekte E-Mail' : "";
   }
 
   ngOnInit() {

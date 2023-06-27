@@ -4,6 +4,8 @@ h1{
     font-weight: bolder;
 }
 form{
+    margin-top: 20px;
+    margin-bottom: 20px;
     display: flex;
     flex-direction:  column;
     .User_information,.Address_information{
@@ -24,10 +26,9 @@ form{
             margin-left: 10px;
             width: 40%;
         }
-      
     }
     button{
-        width: 30%;
+        width: 50%;
         align-self: center ;
         margin-bottom: 10px;
     }

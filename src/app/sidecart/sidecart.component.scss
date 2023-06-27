@@ -9,3 +9,11 @@ mat-sidenav {
     display: grid;
     grid-template-columns: 20% 55% 25%;
 }
+
+mat-sidenav-content {
+    min-height: 90vh;   // Restliche 10vh hat der Header
+}
+
+.bestellButton {
+    width: 100%;
+}
