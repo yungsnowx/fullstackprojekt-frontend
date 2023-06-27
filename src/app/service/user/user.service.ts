@@ -1,44 +1,43 @@
-import {HttpClient,HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Injectable} from "@angular/core";
-import {Observable, catchError, tap} from "rxjs";
+import {Observable} from "rxjs";
 import {UserDTO} from "../../model/user/userDTO";
 
 
-
 @Injectable({
-  providedIn:'root'
+  providedIn: 'root'
 })
-export class UserService{
+export class UserService {
   url = "/users";
-  constructor(private  httpClient:HttpClient) {
+
+  constructor(private httpClient: HttpClient) {
   }
-  public listUsers():Observable<UserDTO[]>{
+
+  public listUsers(): Observable<UserDTO[]> {
     console.log("execute listUser");
     return this.httpClient.get<UserDTO[]>(this.url);
   }
-  public logIn(user:UserDTO):Observable<UserDTO>{
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    console.log("execute Log in");
-    return this.httpClient.post<UserDTO>(this.url+"/log_in",user.get_user(),{headers})
+
+  public getUser(id: string): Observable<UserDTO> {
+    console.log("execute getUser");
+    return this.httpClient.get<UserDTO>(this.url + `/:${id}`);
   }
-  public sign(user:UserDTO){
+
+  public saveUser(user: UserDTO) {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    console.log("execute sign in");
-    return this.httpClient.post(this.url+"/sign_in",user.get_user(),{headers});
+    console.log("execute saveUser");
+    return this.httpClient.post(this.url, user.getUser(), {headers});
   }
-  public saveUser(user:UserDTO){
+
+  public updateUser(user: UserDTO) {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    console.log("execute a save");
-    return this.httpClient.post(this.url,user.get_user(),{headers});
+    console.log("execute updateUser");
+    return this.httpClient.put(this.url, user.getUser(), {headers});
   }
-  public updateUser(user:UserDTO){
+
+  public deleteUser(id: string) {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    console.log("execute an update");
-    return this.httpClient.put(this.url,user.get_user(),{headers});
-  }
-  public deleteUser(id:number){
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    console.log("execute a delete");
-    return this.httpClient.delete(this.url+`/:${id}`,{headers});
+    console.log("execute deleteUser");
+    return this.httpClient.delete(this.url + `/:${id}`, {headers});
   }
 }

@@ -32,22 +32,7 @@ export class LogInComponent implements OnInit {
     if (object.hasError('required')) {
       return `${text} ist leer`;
     }
-    return object.hasError('email') ? 'keine korrekte Email' : "";
-  }
-
-  check() {
-    if (this.email.value && this.password.value) {
-      this.userService.logIn(new UserDTO(this.email.value, this.password.value)).subscribe(
-        response => {
-          if (response === Object({message: "succces"})) {
-            alert("Sie sind verbunden");
-          } else {
-            console.log(response);
-            alert("unkorrekte Information");
-          }
-        }
-      )
-    }
+    return object.hasError('email') ? 'Keine korrekte Email' : "";
   }
 
   ngOnInit() {
