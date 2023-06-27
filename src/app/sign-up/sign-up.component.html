@@ -1,8 +1,7 @@
-<br>
-<h1>
-  Anmeldung
-</h1>
 <form (submit)="signUp()">
+  <h1>
+    Registrierung
+  </h1>
   <div class="User_information">
     <h2>
       Kundeninformationen
@@ -30,7 +29,7 @@
         Email
       </mat-label>
       <input matInput placeholder="Muster" [formControl]="email" required>
-      <mat-error *ngIf="email.invalid">{{getErrorMessage("Email", email)}}</mat-error>
+      <mat-error *ngIf="email.invalid">{{getErrorMessage("E-Mail", email)}}</mat-error>
 
     </mat-form-field>
     <mat-form-field>
@@ -59,7 +58,7 @@
         <mat-label>
           Straße
         </mat-label>
-        <input matInput placeholder="bebelstraße" [formControl]="strasse" required>
+        <input matInput placeholder="Bebelstraße" [formControl]="strasse" required>
         <mat-error *ngIf="strasse.invalid">{{getErrorMessage("Straße", strasse)}}</mat-error>
 
       </mat-form-field>
@@ -99,8 +98,8 @@
       <mat-label>
         Land
       </mat-label>
-      <input matInput [formControl]="land" required>
-      <mat-error *ngIf="land.invalid">{{getErrorMessage("land", land)}}</mat-error>
+      <input matInput placeholder="Deutschland" [formControl]="land" required>
+      <mat-error *ngIf="land.invalid">{{getErrorMessage("Land", land)}}</mat-error>
 
     </mat-form-field>
 
