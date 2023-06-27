@@ -14,10 +14,8 @@ import {UserDTO} from "../../model/user/userDTO";
 })
 @Injectable()
 export class FirebaseAuthService {
-  private userService: UserService;
 
-  constructor(private auth: Auth, userService: UserService) {
-    this.userService = userService;
+  constructor(private auth: Auth, private userService: UserService) {
   }
 
   getFirebaseUser(): any {
