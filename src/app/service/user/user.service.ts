@@ -10,8 +10,7 @@ import {UserDTO} from "../../model/user/userDTO";
 export class UserService {
   url = "/users";
 
-  constructor(private httpClient: HttpClient) {
-  }
+  constructor(private httpClient: HttpClient) {}
 
   public listUsers(): Observable<UserDTO[]> {
     console.log("execute listUser");
@@ -26,13 +25,13 @@ export class UserService {
   public saveUser(user: UserDTO) {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     console.log("execute saveUser");
-    return this.httpClient.post(this.url, user.getUser(), {headers});
+    return this.httpClient.post(this.url, user.getUser(), {headers}).subscribe();
   }
 
   public updateUser(user: UserDTO) {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     console.log("execute updateUser");
-    return this.httpClient.put(this.url, user.getUser(), {headers});
+    return this.httpClient.put(this.url, user.getUser(), {headers}).subscribe();
   }
 
   public deleteUser(id: string) {

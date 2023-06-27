@@ -11,7 +11,6 @@ export class UserDTO implements User {
     this.vorname = vorname;
     this.nachname = nachname;
     this.isAdmin = isAdmin;
-    this.userID = userID;
   }
 
   getUser() {

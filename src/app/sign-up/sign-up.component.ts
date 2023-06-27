@@ -4,7 +4,6 @@ import {AddressService} from '../service/address/address.service';
 import {UserService} from '../service/user/user.service';
 import {AddressDTO} from '../model/address/addressDTO';
 import {FirebaseAuthService} from "../service/firebase/firebase.service";
-import { UserDTO } from '../model/user/userDTO';
 
 
 @Component({
@@ -53,9 +52,7 @@ export class SignUpComponent implements OnInit {
   }
 
   signUp() {
-    this.firebaseAuthService.signUp(this.email.value, this.passwort.value)
-    
-    this.userService.saveUser(new UserDTO(this.firebaseAuthService.getFirebaseUser().uid,this.vorname.value,this.nachname.value))
+    this.firebaseAuthService.signUpAndSendBackend(this.email.value, this.passwort.value, this.vorname.value,this.nachname.value);
     this.addressService.saveAddress(new AddressDTO(
       Math.floor(Math.random() * 1000000),
       this.strasse.value,
