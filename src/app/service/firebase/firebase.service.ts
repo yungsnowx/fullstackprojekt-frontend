@@ -19,7 +19,7 @@ export class FirebaseAuthService {
   getFirebaseUser(): any {
     return this.auth.currentUser;
   }
-
+  
   logout() {
     signOut(this.auth);
   }

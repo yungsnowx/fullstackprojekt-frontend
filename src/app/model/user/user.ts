@@ -1,8 +1,7 @@
 export  interface  User{
+  userID?:number;
   vorname?:string;
   nachname?:string;
-  email?:string;
-  passwort?: string;
   isAdmin?:boolean;
  
 }
