@@ -6,6 +6,8 @@ import {
   signOut
 } from '@angular/fire/auth';
 import {Injectable} from "@angular/core";
+import {UserService} from "../user/user.service";
+import {UserDTO} from "../../model/user/userDTO";
 
 @Injectable({
   providedIn: 'root'
@@ -13,13 +15,13 @@ import {Injectable} from "@angular/core";
 @Injectable()
 export class FirebaseAuthService {
 
-  constructor(private auth: Auth,) {
+  constructor(private auth: Auth, private userService: UserService) {
   }
 
   getFirebaseUser(): any {
     return this.auth.currentUser;
   }
-  
+
   logout() {
     signOut(this.auth);
   }
@@ -45,6 +47,17 @@ export class FirebaseAuthService {
           // Signed in
           const user = userCredential.user;
           console.log(user);
+        }
+      );
+  }
+
+  signUpAndSendBackend(email: string, password: string, vorname: string, nachname: string) {
+    createUserWithEmailAndPassword(this.auth, email, password)
+      .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+          this.userService.saveUser(new UserDTO(user.uid, vorname, nachname));
         }
       );
   }
