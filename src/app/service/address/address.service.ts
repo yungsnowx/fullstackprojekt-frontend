@@ -9,7 +9,7 @@ import { AddressDTO } from "src/app/model/address/addressDTO";
 export class AddressService{
 
     constructor(private httpClient:HttpClient){}
-    url ="/addresse"
+    url ="/adresse"
     public  listAddress():Observable<AddressDTO[]>{
         console.log("execute listeAddress");
         return this.httpClient.get<AddressDTO[]>(this.url);
@@ -22,7 +22,7 @@ export class AddressService{
 
     public saveAddress(address:AddressDTO){
         console.log("execute saveAddress");
-        return this.httpClient.post(this.url,address);
+        return this.httpClient.post(this.url,address).subscribe();
     }
 
     public updateAddress(address:AddressDTO){
