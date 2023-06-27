@@ -1,3 +1,4 @@
+<br>
 <h1>
   Anmeldung
 </h1>
@@ -10,7 +11,7 @@
       <mat-label>
         Vorname
       </mat-label>
-      <input matInput placeholder="Max" [formControl]="vorname" requiered>
+      <input matInput placeholder="Max" [formControl]="vorname" required>
       <mat-error *ngIf="vorname.invalid">{{getErrorMessage("Vorname", vorname)}}</mat-error>
 
     </mat-form-field>
@@ -19,7 +20,7 @@
       <mat-label>
         Nachname
       </mat-label>
-      <input matInput placeholder="Müller" [formControl]="nachname" requiered>
+      <input matInput placeholder="Müller" [formControl]="nachname" required>
       <mat-error *ngIf="nachname.invalid">{{getErrorMessage("Nachname", nachname)}}</mat-error>
 
     </mat-form-field>
@@ -28,7 +29,7 @@
       <mat-label>
         Email
       </mat-label>
-      <input matInput placeholder="Muster" [formControl]="email" requiered>
+      <input matInput placeholder="Muster" [formControl]="email" required>
       <mat-error *ngIf="email.invalid">{{getErrorMessage("Email", email)}}</mat-error>
 
     </mat-form-field>
