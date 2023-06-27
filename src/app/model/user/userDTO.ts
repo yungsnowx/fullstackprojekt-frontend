@@ -1,7 +1,7 @@
 import {User} from "./user";
 
 export class UserDTO implements User {
-  public userID?: string
+  public userID?: string;
   public vorname?: string;
   public nachname?: string;
   public isAdmin?: boolean;
