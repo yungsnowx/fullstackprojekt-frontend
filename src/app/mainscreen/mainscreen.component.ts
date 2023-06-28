@@ -25,10 +25,10 @@ export class MainscreenComponent implements OnInit {
   }
 
   ngOnInit() {}
-  sendItems(product_element){
-    this.itemsProductEvent.emit(product_element)
+  sendProducts(productElement){
+    this.itemsProductEvent.emit(productElement)
   }
-  receiveMessage($event){
-    this.sendItems($event)
+  receivedProduct($event){
+    this.sendProducts($event)
   }
 }
