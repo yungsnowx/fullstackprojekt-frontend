@@ -7,13 +7,13 @@
     <mat-nav-list>
       <div *ngFor="let product of productsList ">
         <div mat-list-item class="productsInCart" *ngIf="product.anzahl != 0">
-          
+
           <p>
             <button mat-mini-fab color="primary"(click)="reduceProduct(product)">-</button>
             {{ product.anzahl }}x&nbsp;
             <button mat-mini-fab color="primary" (click)="addProduct(product)">+</button>
           </p>
-          
+
           <p>{{ product.product.produktname }}</p>
           <p>{{
             product.product.preis * product.anzahl

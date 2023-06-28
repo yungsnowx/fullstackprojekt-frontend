@@ -1,45 +1,47 @@
-import { HttpClient,HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { CartContentDTO } from 'src/app/model/cartcontent/cart-contentDTO';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {CartContentDTO} from 'src/app/model/cartcontent/cart-contentDTO';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartContentService {
   url = '/warenkorbinhalt'
-  constructor(private httpClient: HttpClient) {}
+
+  constructor(private httpClient: HttpClient) {
+  }
 
   public listCarts(): Observable<CartContentDTO[]> {
-    console.log("execute an get all");
+    console.log("execute listCarts");
     return this.httpClient.get<CartContentDTO[]>(this.url);
   }
 
   public listCartContentByCartId(id: number): Observable<CartContentDTO[]> {
-    console.log("execute an get by ID");
+    console.log(`execute listCartContentByCartId with id ${id}`);
     return this.httpClient.get<CartContentDTO[]>(
       `/warenkorbinhalt/warenkorb/${id}`
     );
   }
 
-  public updateCartContent(cartContent: CartContentDTO){
+  public updateCartContent(cartContent: CartContentDTO) {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    console.log("execute an update");
+    console.log("execute updateCartContent");
     return this.httpClient.put(
       this.url,
       cartContent.getWithId(),
       {headers}
     ).subscribe()
   }
-  public addCartContent(cartContent:CartContentDTO){
+
+  public addCartContent(cartContent: CartContentDTO) {
+    console.log("execute addCartContent");
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    console.log("execute an addCart");
-    console.log(cartContent)
-    return this.httpClient.post(this.url,cartContent.get()).subscribe()
+    return this.httpClient.post(this.url, cartContent.get(), {headers}).subscribe()
   }
-  public deleteCartContent(id:number){
-    //const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    console.log("execute an deleteCart")
-    return this.httpClient.delete(this.url+`/${id}`).subscribe()
+
+  public deleteCartContent(id: number) {
+    console.log("execute deleteCartContent")
+    return this.httpClient.delete(this.url + `/${id}`).subscribe()
   }
 }

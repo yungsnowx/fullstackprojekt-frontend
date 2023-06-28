@@ -10,15 +10,16 @@ import {UserDTO} from "../../model/user/userDTO";
 export class UserService {
   url = "/users";
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+  }
 
   public listUsers(): Observable<UserDTO[]> {
-    console.log("execute listUser");
+    console.log("execute listUsers");
     return this.httpClient.get<UserDTO[]>(this.url);
   }
 
   public getUser(id: string): Observable<UserDTO> {
-    console.log("execute getUser");
+    console.log(`execute getUser with id ${id}`);
     return this.httpClient.get<UserDTO>(this.url + `/:${id}`);
   }
 
