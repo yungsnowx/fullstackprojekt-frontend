@@ -2,7 +2,7 @@
   <mat-sidenav #sidenav opened="{{ getCartValue }}" position="end" mode="side">
     <h1>Ihr Warenkorb</h1>
 
-    <hr />
+    <hr/>
 
     <mat-nav-list>
       <div *ngFor="let product of productsList ">
@@ -11,28 +11,48 @@
           <p>
             {{ product.anzahl }}x&nbsp;
           </p>
-          
+
           <div class="quantityButtonsInCart">
             <button (click)="reduceProduct(product)">-</button>
             <button (click)="addProduct(product)">+</button>
           </div>
 
           <p class="productNameInCart">{{ product.product.produktname }}</p>
-          <p class="priceInCart" >{{
-            product.product.preis * product.anzahl
-              | currency : "EUR" : true
-          }}</p>
+          <p class="priceInCart">{{ product.product.preis * product.anzahl | currency : "EUR" : true
+            }}</p>
 
         </div>
       </div>
     </mat-nav-list>
-    <button class="bestellButton" mat-flat-button color="primary" (click)="orderCart()">
+
+    <hr/>
+    <div>
+      <p class="totalPrice">Gesamtpreis: {{ getSum() | currency : "EUR" : true }}</p>
+    </div>
+
+    <!--Falls User nicht eingeloggt ist, wird er auf die Login Seite weitergeleitet-->
+    <button
+      *ngIf="this.firebaseAuthService.getFirebaseUser() == null; else loggedIn"
+      class="bestellButton" mat-flat-button
+      color="primary"
+      [routerLink]="'log_in'">
       Bestellen
     </button>
+    <!--Falls er angemeldet ist wird, wird die "orderCart()" aufgerufen    -->
+    <ng-template #loggedIn>
+      <button
+        class="bestellButton" mat-flat-button
+        color="primary"
+        (click)="orderCart()">
+        Bestellen
+      </button>
+    </ng-template>
+
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <app-mainscreen *ngIf=" currentPath== '/' " [searchValue]="searchValue" (itemsProductEvent)="receivedItems($event)"></app-mainscreen>
+    <app-mainscreen *ngIf=" currentPath== '/' " [searchValue]="searchValue"
+                    (itemsProductEvent)="receivedItems($event)"></app-mainscreen>
     <router-outlet *ngIf=" currentPath != '/' "></router-outlet>
   </mat-sidenav-content>
 

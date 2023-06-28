@@ -7,6 +7,8 @@ import {ProductDTO} from '../model/product/productDTO';
 import {NavigationEnd, Router} from '@angular/router';
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {CartCount} from './cart-count';
+import {FirebaseAuthService} from "../service/firebase/firebase.service";
+
 
 
 @Component({
@@ -26,8 +28,10 @@ export class SidecartComponent implements OnInit {
   warenkorbinhaltID: any;
   currentPath: string = '';
   countService: CartCount;
+  firebaseAuthService: FirebaseAuthService
 
-  constructor(cartContentService: CartContentService, private router: Router, private snackBar: MatSnackBar, countService: CartCount) {
+  constructor(cartContentService: CartContentService, firebaseAuthService: FirebaseAuthService, private router: Router, private snackBar: MatSnackBar, countService: CartCount) {
+    this.firebaseAuthService = firebaseAuthService;
     this.productsList = []
     this.countService = countService
     this.cartContentService = cartContentService;
@@ -129,6 +133,14 @@ export class SidecartComponent implements OnInit {
     this.countService.setCount(count)
   }
 
+
+  getSum() {
+    let sum = 0
+    for (let product of this.productsList) {
+      sum += product.product.preis * product.anzahl
+    }
+    return sum
+  }
   ngOnInit() {
   }
 
