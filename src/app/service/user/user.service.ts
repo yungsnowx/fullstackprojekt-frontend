@@ -26,13 +26,13 @@ export class UserService {
   public saveUser(user: UserDTO) {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     console.log("execute saveUser");
-    return this.httpClient.post(this.url, user.getUser(), {headers}).subscribe();
+    return this.httpClient.post(this.url, user, {headers}).subscribe();
   }
 
   public updateUser(user: UserDTO) {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     console.log("execute updateUser");
-    return this.httpClient.put(this.url, user.getUser(), {headers}).subscribe();
+    return this.httpClient.put(this.url, user, {headers}).subscribe();
   }
 
   public deleteUser(id: string) {

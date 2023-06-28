@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, Validators} from "@angular/forms";
-import {UserDTO} from "../model/user/userDTO";
 import {UserService} from "../service/user/user.service";
-import {Observable} from "rxjs";
 import {FirebaseAuthService} from "../service/firebase/firebase.service";
 
 
@@ -15,7 +13,6 @@ export class LogInComponent implements OnInit {
   email: FormControl;
   hide: boolean;
   password: FormControl;
-  users: Observable<UserDTO[]>;
   userService: UserService;
   firebaseAuthService: FirebaseAuthService;
 
@@ -24,7 +21,6 @@ export class LogInComponent implements OnInit {
     this.password = new FormControl();
     this.email = new FormControl("", [Validators.required, Validators.email]);
     this.userService = userService;
-    this.users = userService.listUsers();
     this.firebaseAuthService = firebaseAuthService;
   }
 
