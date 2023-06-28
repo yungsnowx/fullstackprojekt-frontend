@@ -1,4 +1,3 @@
 export class StaticVars {
-
-    public static cartIdInUse: number = 2;
+  public static cartIdInUse: number = 2;
 }

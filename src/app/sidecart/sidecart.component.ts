@@ -1,12 +1,12 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Observable, isEmpty} from 'rxjs';
+import {Component, Input, OnInit} from '@angular/core';
+import {Observable} from 'rxjs';
 import {CartContentDTO} from '../model/cartcontent/cart-contentDTO';
 import {CartContentService} from '../service/cartcontent/cart-content.service';
 import {StaticVars} from '../config/static-vars';
 import {ProductDTO} from '../model/product/productDTO';
 import {NavigationEnd, Router} from '@angular/router';
 import {MatSnackBar} from "@angular/material/snack-bar";
-import { CountService } from '../service/service.Count';
+import {CartCount} from './cart-count';
 
 
 @Component({
@@ -15,19 +15,19 @@ import { CountService } from '../service/service.Count';
   styleUrls: ['./sidecart.component.scss'],
 })
 export class SidecartComponent implements OnInit {
-  private cartContentService: CartContentService;
-  public cartContents: Observable<CartContentDTO[]>;
-  cart:any;
+  @Input() getCartValue: boolean = false;
   @Input() searchValue: string = '';
 
-  @Input() getCartValue: boolean = false;
-  added:boolean;
-  productsList:any;
-  warenkorbID:any;
-  warenkorbinhaltID:any;
+  private cartContentService: CartContentService;
+  public cartContents: Observable<CartContentDTO[]>;
+  added: boolean;
+  productsList: any;
+  warenkorbID: any;
+  warenkorbinhaltID: any;
   currentPath: string = '';
-  countService:CountService;
-  constructor(cartContentService: CartContentService, private router: Router, private snackBar: MatSnackBar, countService:CountService) {
+  countService: CartCount;
+
+  constructor(cartContentService: CartContentService, private router: Router, private snackBar: MatSnackBar, countService: CartCount) {
     this.productsList = []
     this.countService = countService
     this.cartContentService = cartContentService;
@@ -35,9 +35,9 @@ export class SidecartComponent implements OnInit {
     this.cartContents.subscribe(products => {
       this.warenkorbID = StaticVars.cartIdInUse
       this.warenkorbinhaltID = products[0].warenkorbinhaltID
-      for(let product of products ){
+      for (let product of products) {
         this.productsList.push({
-          product:new ProductDTO(product.produktID.produktID,
+          product: new ProductDTO(product.produktID.produktID,
             product.produktID.produktname,
             product.produktID.produktbeschreibung,
             product.produktID.preis,
@@ -55,14 +55,15 @@ export class SidecartComponent implements OnInit {
       }
     });
   }
-  receivedItems($event){
+
+  receivedItems($event) {
     this.added = true
     let cartContentElement = this.cartContentService.listCartContentByCartId(StaticVars.cartIdInUse)
-    cartContentElement.subscribe( datas =>{
-      for(let product of this.productsList){
-        if(product.product.produktname == $event.produktname){
-          for(let data of datas){
-            if(data.produktID.produktID == product.product.produktID ){
+    cartContentElement.subscribe(datas => {
+      for (let product of this.productsList) {
+        if (product.product.produktname == $event.produktname) {
+          for (let data of datas) {
+            if (data.produktID.produktID == product.product.produktID) {
               product.anzahl++;
               this.cartContentService.updateCartContent(new CartContentDTO(
                 data.warenkorbinhaltID,
@@ -76,7 +77,7 @@ export class SidecartComponent implements OnInit {
           }
         }
       }
-      if(this.added){
+      if (this.added) {
         this.productsList.push({
           product: $event,
           anzahl: 1,
@@ -90,13 +91,14 @@ export class SidecartComponent implements OnInit {
           this.productsList.slice(-1)[0].anzahl))
       }
       let count = 0
-      for (let product of this.productsList){
+      for (let product of this.productsList) {
         count += product.anzahl
       }
       this.countService.setCount(count)
     })
   }
-  addProduct(product){
+
+  addProduct(product) {
     product.anzahl++
     this.cartContentService.updateCartContent(
       new CartContentDTO(
@@ -105,27 +107,30 @@ export class SidecartComponent implements OnInit {
         product.product.produktID,
         product.anzahl
       ))
-    let count = this.countService.getCount()+1
+    let count = this.countService.getCount() + 1
     this.countService.setCount(count)
   }
-  reduceProduct(product){
+
+  reduceProduct(product) {
     product.anzahl--
-    if(product.anzahl == 0){
+    if (product.anzahl == 0) {
       this.cartContentService.deleteCartContent(product.warenkorbinhaltID)
-    }
-    else{
+    } else {
       this.cartContentService.updateCartContent(
         new CartContentDTO(
           product.warenkorbinhaltID,
           product.warenkorbID,
           product.product.produktID,
           product.anzahl
+        )
       )
-    )}
+    }
     let count = this.countService.getCount() - 1
     this.countService.setCount(count)
   }
-  ngOnInit() {}
+
+  ngOnInit() {
+  }
 
   orderCart() {
     this.snackBar.open("Bestellung wurde aufgegeben", "OK",);

@@ -16,8 +16,8 @@
         description="{{ product.produktbeschreibung }}"
         price="{{ product.preis }}"
         class="product"
-        (ProductEvent)="receivedProduct($event)"
-        
+        (productEvent)="receivedProduct($event)"
+
       ></app-product>
     </div>
   </div>

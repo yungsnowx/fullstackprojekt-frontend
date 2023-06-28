@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -8,19 +8,16 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'fullstackprojekt-frontend';
 
-  seachText: string = '';
+  searchText: string = '';
 
-  onSearchTextEntered(searchValue: string){
-    this.seachText = searchValue;
+  onSearchTextEntered(searchValue: string) {
+    this.searchText = searchValue;
   }
 
   cart: boolean = false;
-  log:boolean = false;
-  countCart:number = 0
-  cartToggle(value: boolean){
+  log: boolean = false;
+
+  cartToggle(value: boolean) {
     this.cart = value;
-  }
-  receivedCountCart(value:number){
-    this.countCart = value;
   }
 }
