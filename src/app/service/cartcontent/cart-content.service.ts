@@ -34,6 +34,12 @@ export class CartContentService {
   public addCartContent(cartContent:CartContentDTO){
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     console.log("execute an addCart");
+    console.log(cartContent)
     return this.httpClient.post(this.url,cartContent.get()).subscribe()
+  }
+  public deleteCartContent(id:number){
+    //const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    console.log("execute an deleteCart")
+    return this.httpClient.delete(this.url+`/${id}`).subscribe()
   }
 }

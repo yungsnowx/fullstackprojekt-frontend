@@ -1,13 +1,20 @@
 mat-sidenav {
     background-color: rgb(63, 81, 181, 0.1);
-    width: 20vw;
+    width: 40vw;
     padding: 20px;
 }
 
 .productsInCart {
     width: 100%;
-    display: grid;
-    grid-template-columns: 20% 55% 25%;
+    display: flex;
+    flex-direction:  row;
+    justify-content: space-around;
+    p{
+        align-self: center;
+    }
+    button{
+        border-radius:40%;
+    }
 }
 
 mat-sidenav-content {
