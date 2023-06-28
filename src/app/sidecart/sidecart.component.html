@@ -9,16 +9,20 @@
         <div mat-list-item class="productsInCart" *ngIf="product.anzahl != 0">
 
           <p>
-            <button mat-mini-fab color="primary"(click)="reduceProduct(product)">-</button>
             {{ product.anzahl }}x&nbsp;
-            <button mat-mini-fab color="primary" (click)="addProduct(product)">+</button>
           </p>
+          
+          <div class="quantityButtonsInCart">
+            <button (click)="reduceProduct(product)">-</button>
+            <button (click)="addProduct(product)">+</button>
+          </div>
 
-          <p>{{ product.product.produktname }}</p>
-          <p>{{
+          <p class="productNameInCart">{{ product.product.produktname }}</p>
+          <p class="priceInCart" >{{
             product.product.preis * product.anzahl
               | currency : "EUR" : true
           }}</p>
+
         </div>
       </div>
     </mat-nav-list>
