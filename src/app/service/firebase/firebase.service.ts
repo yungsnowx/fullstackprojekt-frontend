@@ -57,7 +57,7 @@ export class FirebaseAuthService {
           // Signed in
           const user = userCredential.user;
           console.log(user);
-          this.userService.saveUser(new UserDTO(user.uid, vorname, nachname));
+          this.userService.saveUser(new UserDTO(user.uid, vorname, nachname, false));
         }
       );
   }
