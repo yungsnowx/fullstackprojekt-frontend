@@ -1,13 +1,29 @@
 <mat-card class="product-card">
-  <img mat-card-image src="http://localhost:3000/images/{{ image }}" />
+  <img mat-card-image src="http://localhost:3000/images/{{ image }}" alt="Produktbild"/>
   <mat-card-header>
-    <mat-card-title>{{ title }}</mat-card-title>
+    <mat-card-title>{{ id }} - {{ title }}</mat-card-title>
     <mat-card-subtitle>{{ price | currency : "EUR" : "€" }}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>{{ description }}</mat-card-content>
   <mat-card-actions>
-    <button mat-flat-button class="button-addcart" color="primary" (click)="sendProductInfo()">
+<!--Falls der User nicht eingeloggt ist, wird er bei zur Login Seite weitergeleitet,
+     ansonsten kann er das Produkt hinzufuegen-->
+    <button
+      *ngIf="this.firebaseAuthService.getFirebaseUser() == null; else loggedIn"
+      mat-flat-button
+      class="button-addcart"
+      color="primary"
+      [routerLink]="'log_in'">
       In den Warenkorb
     </button>
+    <ng-template #loggedIn>
+      <button
+        mat-flat-button
+        class="button-addcart"
+        color="primary"
+        (click)="addProductToCart()">
+        In den Warenkorb
+      </button>
+    </ng-template>
   </mat-card-actions>
 </mat-card>

@@ -10,7 +10,12 @@ const routes: Routes = [
   },
   {
     path: "sign_up", component: SignUpComponent
-  }
+  },
+  // Pfad zum "MainscreenComponnent" hinzugefuegt wird wahrscheinlich benoetigt
+  // um von Log_in zum MainScreen zurueckzukehren
+  {
+    path: "#", component: MainscreenComponent
+  },
 ];
 
 @NgModule({
