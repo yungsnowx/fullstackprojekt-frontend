@@ -24,14 +24,14 @@ export class CartContentService {
     );
   }
 
-  public updateCartContent(cartContent: CartContentDTO) {
+  public updateCartContent(cartContent: CartContentDTO): Observable<any> {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     console.log("execute updateCartContent");
     return this.httpClient.put(
       this.url,
       cartContent,
       {headers}
-    ).subscribe()
+    )
   }
 
   public addCartContent(cartContent: CartContentDTO) {

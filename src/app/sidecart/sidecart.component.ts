@@ -8,6 +8,8 @@ import {CartStateService} from './cart-state.service';
 import {FirebaseAuthService} from "../service/firebase/firebase.service";
 import {Product} from "../model/product/product";
 import {ProductService} from "../service/product/product.service";
+import {CartDTO} from "../model/cart/cartDTO";
+import {CartService} from "../service/cart/cart.service";
 
 @Component({
   selector: 'app-sidecart',
@@ -21,13 +23,16 @@ export class SidecartComponent implements OnInit {
   public cartContentService: CartContentService;
   public productService: ProductService;
 
+  cartService: CartService;
+
   products: ProductDTO[];
   currentPath: string = '';
   cartStateService: CartStateService;
   firebaseAuthService: FirebaseAuthService;
 
-  constructor(cartContentService: CartContentService, firebaseAuthService: FirebaseAuthService, productService: ProductService, private router: Router, private snackBar: MatSnackBar, cartStateService: CartStateService) {
+  constructor(cartContentService: CartContentService, firebaseAuthService: FirebaseAuthService, productService: ProductService, private router: Router, private snackBar: MatSnackBar, cartStateService: CartStateService, cartService: CartService) {
     this.firebaseAuthService = firebaseAuthService;
+    this.cartService = cartService;
     this.cartContentService = cartContentService;
     this.productService = productService;
     this.cartStateService = cartStateService
@@ -71,9 +76,6 @@ export class SidecartComponent implements OnInit {
   ngOnInit() {
   }
 
-  orderCart() {
-    this.snackBar.open("Bestellung wurde aufgegeben", "OK",);
-  }
 
   getProductById(id: number): Product {
     return this.products.find(product => product.produktID == id);
@@ -81,6 +83,16 @@ export class SidecartComponent implements OnInit {
 
   getCartContent() {
     return this.cartStateService.getCartContents()
+  }
+
+  orderCart() {
+    if (this.getCartContent().length != 0) {
+      //Cart aktualisieren
+      this.cartService.updateCart(new CartDTO(StaticVars.cartIdInUse, "5", false))
+      this.snackBar.open("Bestellung wurde aufgegeben", "OK",);
+    } else {
+      this.snackBar.open("Warenkorb ist leer", "OK",);
+    }
   }
 }
 
