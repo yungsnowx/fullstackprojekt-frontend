@@ -1,5 +1,6 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {ProductDTO} from '../model/product/productDTO';
+import {FirebaseAuthService} from "../service/firebase/firebase.service";
 
 @Component({
   selector: 'app-product',
@@ -13,8 +14,9 @@ export class ProductComponent implements OnInit {
   @Input() image: string = '';
   @Input() id: string = "";
   @Output() productEvent = new EventEmitter<ProductDTO>()
-
-  constructor() {
+  firebaseAuthService: FirebaseAuthService;
+  constructor(firebaseAuthService: FirebaseAuthService) {
+    this.firebaseAuthService = firebaseAuthService;
   }
 
   sendProductInfo() {
