@@ -1,10 +1,10 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {Observable} from 'rxjs';
+import {count, Observable} from 'rxjs';
 import {CartContentDTO} from '../model/cartcontent/cart-contentDTO';
 import {CartContentService} from '../service/cartcontent/cart-content.service';
 import {StaticVars} from '../config/static-vars';
 import {FirebaseAuthService} from "../service/firebase/firebase.service";
-import {CartCount} from '../sidecart/cart-count';
+import {CartStateService} from '../sidecart/cart-state.service';
 
 
 @Component({
@@ -20,14 +20,14 @@ export class HeaderComponent implements OnInit {
 
   private cartContentService: CartContentService;
   public cartContents: Observable<CartContentDTO[]>;
-  countService: CartCount;
+  countService: CartStateService;
   cartCount: number;
   firebaseAuthService: FirebaseAuthService
   showCart: boolean = false;
   enteredSearchValue: string = '';
   showDiv: boolean = false;
 
-  constructor(cartContentService: CartContentService, firebaseAuthService: FirebaseAuthService, countService: CartCount) {
+  constructor(cartContentService: CartContentService, firebaseAuthService: FirebaseAuthService, countService: CartStateService) {
     this.firebaseAuthService = firebaseAuthService;
     this.countService = countService
     this.cartContentService = cartContentService;
@@ -37,7 +37,6 @@ export class HeaderComponent implements OnInit {
       cartContent.forEach((content) => {
         this.cartCount += content.anzahl;
       });
-      countService.setCount(this.cartCount)
     });
   }
 
@@ -54,5 +53,15 @@ export class HeaderComponent implements OnInit {
     this.firebaseAuthService.logout();
   }
 
+  getCartCount() {
+    let sum = 0
+    this.countService.getCartContents().forEach((cartContent) => {
+      sum += cartContent.anzahl;
+    })
+    return sum
+  }
+
   ngOnInit(): void {}
+
+  protected readonly count = count;
 }

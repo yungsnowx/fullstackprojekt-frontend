@@ -14,4 +14,9 @@ export class ProductService {
     console.log('execute listProducts');
     return this.httpClient.get<ProductDTO[]>(this.url);
   }
+
+  public getProductById(id: number): Observable<ProductDTO> {
+    console.log('execute getProductById');
+    return this.httpClient.get<ProductDTO>(this.url + `/${id}`);
+  }
 }
