@@ -1,24 +1,25 @@
-import { Cart } from './cart';
+import {Cart} from './cart';
 
 export class CartDTO implements Cart {
   public warenkorbID: number;
-  public userID: number;
+  public userID: string;
   public istAktiv: boolean;
+
   constructor(
     warenkorbID: number,
-    userID: number,
-    istAktiv:boolean
-
+    userID: string,
+    istAktiv: boolean
   ) {
     this.warenkorbID = warenkorbID;
     this.userID = userID;
     this.istAktiv = istAktiv
   }
-  getCart(){
+
+  getCart() {
     return {
       warenkorbID: this.warenkorbID,
-      userID:this.userID,
-      istAktiv:this.istAktiv
+      userID: this.userID,
+      istAktiv: this.istAktiv
     }
 
   }

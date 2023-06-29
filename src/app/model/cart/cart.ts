@@ -1,5 +1,5 @@
 export interface Cart {
   warenkorbID: number;
-  userID: number;
+  userID: string;
   istAktiv: boolean;
 }
