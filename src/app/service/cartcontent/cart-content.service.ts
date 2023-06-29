@@ -29,7 +29,7 @@ export class CartContentService {
     console.log("execute updateCartContent");
     return this.httpClient.put(
       this.url,
-      cartContent.getWithId(),
+      cartContent,
       {headers}
     ).subscribe()
   }

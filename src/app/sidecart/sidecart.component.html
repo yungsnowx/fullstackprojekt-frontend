@@ -5,22 +5,20 @@
     <hr/>
 
     <mat-nav-list>
-      <div *ngFor="let product of productsList ">
-        <div mat-list-item class="productsInCart" *ngIf="product.anzahl != 0">
-
-          <p>
-            {{ product.anzahl }}x&nbsp;
-          </p>
-
-          <div class="quantityButtonsInCart">
-            <button (click)="reduceProduct(product)">-</button>
-            <button (click)="addProduct(product)">+</button>
+      <div *ngFor="let cartContent of getCartContent()">
+        <div *ngIf="getProductById(cartContent.produktID) as product">
+          <div mat-list-item class="productsInCart" *ngIf="cartContent.anzahl != 0">
+            <p>
+              {{ cartContent.anzahl }}x&nbsp;
+            </p>
+            <div class="quantityButtonsInCart">
+              <button (click)="reduceProductCount(cartContent)">-</button>
+              <button (click)="increaseProductCount(cartContent)">+</button>
+            </div>
+            <p class="productNameInCart">{{ product.produktname }}</p>
+            <p class="priceInCart">{{ product.preis * cartContent.anzahl | currency : "EUR" : true
+              }}</p>
           </div>
-
-          <p class="productNameInCart">{{ product.product.produktname }}</p>
-          <p class="priceInCart">{{ product.product.preis * product.anzahl | currency : "EUR" : true
-            }}</p>
-
         </div>
       </div>
     </mat-nav-list>
@@ -52,7 +50,7 @@
 
   <mat-sidenav-content>
     <app-mainscreen *ngIf=" currentPath== '/' " [searchValue]="searchValue"
-                    (itemsProductEvent)="receivedItems($event)"></app-mainscreen>
+    ></app-mainscreen>
     <router-outlet *ngIf=" currentPath != '/' "></router-outlet>
   </mat-sidenav-content>
 
