@@ -38,7 +38,7 @@ export class FirebaseAuthService {
       .then((userCredential) => {
 
         // Signed in
-        this.router.navigate(['#']);
+        this.router.navigate(['/']);
         const user = userCredential.user;
         console.log(user);
       })
