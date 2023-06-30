@@ -8,6 +8,8 @@ import {
 import {Injectable} from "@angular/core";
 import {UserService} from "../user/user.service";
 import {UserDTO} from "../../model/user/userDTO";
+import {Router} from "@angular/router";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +17,7 @@ import {UserDTO} from "../../model/user/userDTO";
 @Injectable()
 export class FirebaseAuthService {
 
-  constructor(private auth: Auth, private userService: UserService) {
+  constructor(private auth: Auth, private userService: UserService, private router: Router, private snackBar: MatSnackBar) {
   }
 
   getFirebaseUser(): any {
@@ -34,17 +36,26 @@ export class FirebaseAuthService {
   logIn(email: string, password: string) {
     signInWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          console.log(user);
-        }
-      )
+
+        // Signed in
+        this.router.navigate(['#']);
+        const user = userCredential.user;
+        console.log(user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        console.log(errorCode);
+        this.snackBar.open("Falsche Anmeldedaten", "OK", {
+          duration: 5000,
+        });
+      })
   }
 
   signUp(email: string, password: string) {
     createUserWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
           // Signed in
+          this.router.navigate(['#']);
           const user = userCredential.user;
           console.log(user);
         }
