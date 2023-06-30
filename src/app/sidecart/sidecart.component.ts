@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CartContentService} from '../service/cartcontent/cart-content.service';
-import {StaticVars} from '../config/static-vars';
 import {ProductDTO} from '../model/product/productDTO';
 import {NavigationEnd, Router} from '@angular/router';
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -29,14 +28,18 @@ export class SidecartComponent implements OnInit {
   currentPath: string = '';
   cartStateService: CartStateService;
   firebaseAuthService: FirebaseAuthService;
+  cartId: number;
 
   constructor(cartContentService: CartContentService, firebaseAuthService: FirebaseAuthService, productService: ProductService, private router: Router, private snackBar: MatSnackBar, cartStateService: CartStateService, cartService: CartService) {
     this.firebaseAuthService = firebaseAuthService;
     this.cartService = cartService;
     this.cartContentService = cartContentService;
     this.productService = productService;
-    this.cartStateService = cartStateService
-    this.cartContentService.listCartContentByCartId(StaticVars.cartIdInUse).subscribe(value => {
+    this.cartStateService = cartStateService;
+    cartService.getActiveCartByUserId(this.firebaseAuthService.getFirebaseUser().uid).subscribe(cart => {
+      this.cartId = cart.warenkorbID;
+    })
+    this.cartContentService.listCartContentByCartId(this.cartId).subscribe(value => {
       this.cartStateService.setCartContents(value)
     })
     this.productService.listProducts().subscribe(value => {
@@ -88,7 +91,8 @@ export class SidecartComponent implements OnInit {
   orderCart() {
     if (this.getCartContent().length != 0) {
       //Cart aktualisieren
-      this.cartService.updateCart(new CartDTO(StaticVars.cartIdInUse, "5", false))
+      this.cartService.updateCart(new CartDTO(this.cartId, "5", false))
+
       this.snackBar.open("Bestellung wurde aufgegeben", "OK",);
     } else {
       this.snackBar.open("Warenkorb ist leer", "OK",);

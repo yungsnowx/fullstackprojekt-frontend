@@ -62,14 +62,17 @@ export class FirebaseAuthService {
       );
   }
 
-  signUpAndSendBackend(email: string, password: string, vorname: string, nachname: string) {
+  signUpAndSendBackend(email: string, password: string, vorname: string, nachname: string): UserDTO {
     createUserWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
           console.log(user);
-          this.userService.saveUser(new UserDTO(user.uid, vorname, nachname, false));
+          let userObject: UserDTO = new UserDTO(user.uid, vorname, nachname, false);
+          this.userService.saveUser(userObject);
+          return userObject;
         }
       );
+    return null;
   }
 }

@@ -2,9 +2,9 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {count, Observable} from 'rxjs';
 import {CartContentDTO} from '../model/cartcontent/cart-contentDTO';
 import {CartContentService} from '../service/cartcontent/cart-content.service';
-import {StaticVars} from '../config/static-vars';
 import {FirebaseAuthService} from "../service/firebase/firebase.service";
 import {CartStateService} from '../sidecart/cart-state.service';
+import {CartService} from "../service/cart/cart.service";
 
 
 @Component({
@@ -20,6 +20,7 @@ export class HeaderComponent implements OnInit {
 
   private cartContentService: CartContentService;
   public cartContents: Observable<CartContentDTO[]>;
+  private cartService: CartService;
   countService: CartStateService;
   cartCount: number;
   firebaseAuthService: FirebaseAuthService
@@ -27,11 +28,12 @@ export class HeaderComponent implements OnInit {
   enteredSearchValue: string = '';
   showDiv: boolean = false;
 
-  constructor(cartContentService: CartContentService, firebaseAuthService: FirebaseAuthService, countService: CartStateService) {
+  constructor(cartContentService: CartContentService, firebaseAuthService: FirebaseAuthService, countService: CartStateService, cartService: CartService) {
     this.firebaseAuthService = firebaseAuthService;
     this.countService = countService
     this.cartContentService = cartContentService;
-    this.cartContents = cartContentService.listCartContentByCartId(StaticVars.cartIdInUse);
+    this.cartService = cartService;
+
     this.cartCount = 0
     this.cartContents.forEach((cartContent) => {
       cartContent.forEach((content) => {
@@ -61,7 +63,13 @@ export class HeaderComponent implements OnInit {
     return sum
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.cartService.getActiveCartByUserId(this.firebaseAuthService.getFirebaseUser().uid).subscribe(cart => {
+      if (cart != null) {
+        this.cartContents = this.cartContentService.listCartContentByCartId(cart.warenkorbID);
+      }
+    });
+  }
 
   protected readonly count = count;
 }

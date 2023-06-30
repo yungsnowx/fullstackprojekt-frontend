@@ -19,14 +19,14 @@ export class CartService {
     return this.httpClient.get<CartDTO[]>(this.url);
   }
 
-  public addCart(cartDTO: CartDTO) {
+  public addCart(cartDTO: CartDTO): Observable<CartDTO> {
     console.log("execute addCart");
     const headers = new HttpHeaders().set('Content-Type', 'application/json')
-    return this.httpClient.post(this.url, cartDTO.getCart(), {headers}).subscribe()
+    return this.httpClient.post<CartDTO>(this.url, cartDTO.getWithoutId(), {headers})
   }
 
-  public getCartByUserId(userId: string): Observable<CartDTO> {
-    console.log("execute getCart by  user id")
+  public getActiveCartByUserId(userId: string): Observable<CartDTO> {
+    console.log(`execute getActiveCartByUserId with id ${userId}`)
     return this.httpClient.get<CartDTO>(this.url + `/user/${userId}`)
   }
 
@@ -43,6 +43,5 @@ export class CartService {
   public deleteCart(id: number) {
     console.log("execute DeleteCart")
     return this.httpClient.delete(this.url + `/:${id}`).subscribe()
-
   }
 }

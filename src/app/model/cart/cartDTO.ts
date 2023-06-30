@@ -21,6 +21,11 @@ export class CartDTO implements Cart {
       userID: this.userID,
       istAktiv: this.istAktiv
     }
-
+  }
+  getWithoutId() {
+    return {
+      userID: this.userID,
+      istAktiv: this.istAktiv
+    }
   }
 }
