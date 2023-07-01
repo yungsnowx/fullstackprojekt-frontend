@@ -3,6 +3,7 @@ import {FirebaseAuthService} from "../service/firebase/firebase.service";
 import {CartContentService} from "../service/cartcontent/cart-content.service";
 import {CartContentDTO} from "../model/cartcontent/cart-contentDTO";
 import {take} from "rxjs";
+import {CartService} from "../service/cart/cart.service";
 
 @Component({
   selector: 'app-product',
@@ -17,7 +18,8 @@ export class ProductComponent {
   @Input() id: string = "";
 
   constructor(public firebaseAuthService: FirebaseAuthService,
-              public cartContentService: CartContentService) {
+              public cartContentService: CartContentService,
+              private cartService: CartService) {
   }
 
   /**
@@ -29,19 +31,24 @@ export class ProductComponent {
    */
   addProductToCart() {
     let productAlreadyInCart: boolean = false;
+    this.cartService.getActiveCartByUserId(this.firebaseAuthService.getUserID()).subscribe(cart => {
 
-    this.cartContentService.getCartContent().pipe(take(1)).subscribe(cartContents => {
-      cartContents.forEach(cartContent => {
-        if (cartContent.produktID == parseInt(this.id)) {
-          productAlreadyInCart = true;
-          cartContent.anzahl++;
-          this.cartContentService.updateCartContent(cartContent)
+      this.cartContentService.getCartContent().pipe(take(1)).subscribe(cartContents => {
+        cartContents.forEach(cartContent => {
+          if (cartContent.produktID == parseInt(this.id)) {
+            productAlreadyInCart = true;
+            cartContent.anzahl++;
+            this.cartContentService.updateCartContent(cartContent)
+          }
+        })
+
+        if (!productAlreadyInCart) {
+          this.cartContentService.addCartContent(new CartContentDTO(0, cart.warenkorbID, parseInt(this.id), 1))
         }
       })
 
-      if (!productAlreadyInCart) {
-        this.cartContentService.addCartContent(new CartContentDTO(0, 2, parseInt(this.id), 1))
-      }
     })
   }
+  ;
 }
+

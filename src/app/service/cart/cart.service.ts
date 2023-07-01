@@ -37,7 +37,7 @@ export class CartService {
 
   public updateCart(cartDTO: CartDTO) {
     console.log("execute an update of the  Cart")
-    return this.httpClient.put(this.url, cartDTO.getCart()).subscribe()
+    return this.httpClient.put(this.url, cartDTO).subscribe()
   }
 
   public deleteCart(id: number) {
