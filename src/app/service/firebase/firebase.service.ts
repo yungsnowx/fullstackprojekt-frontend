@@ -10,6 +10,8 @@ import {UserService} from "../user/user.service";
 import {UserDTO} from "../../model/user/userDTO";
 import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {CartService} from "../cart/cart.service";
+import {CartDTO} from "../../model/cart/cartDTO";
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +19,11 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 @Injectable()
 export class FirebaseAuthService {
 
-  constructor(private auth: Auth, private userService: UserService, private router: Router, private snackBar: MatSnackBar) {
+  constructor(private auth: Auth,
+              private userService: UserService,
+              private cartService: CartService,
+              private router: Router,
+              private snackBar: MatSnackBar) {
   }
 
   getFirebaseUser(): any {
@@ -70,6 +76,7 @@ export class FirebaseAuthService {
           console.log(user);
           let userObject: UserDTO = new UserDTO(user.uid, vorname, nachname, false);
           this.userService.saveUser(userObject);
+          this.cartService.addCart(new CartDTO(0, user.uid, true)).subscribe();
           return userObject;
         }
       );

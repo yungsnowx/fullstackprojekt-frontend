@@ -5,7 +5,6 @@ import {UserService} from '../service/user/user.service';
 import {AddressDTO} from '../model/address/addressDTO';
 import {FirebaseAuthService} from "../service/firebase/firebase.service";
 import {CartService} from "../service/cart/cart.service";
-import {CartDTO} from "../model/cart/cartDTO";
 
 
 @Component({
@@ -64,7 +63,6 @@ export class SignUpComponent implements OnInit {
       this.plz.value,
       this.land.value
     ));
-    this.cartService.addCart(new CartDTO(0, this.firebaseAuthService.getFirebaseUser().uid, true)).subscribe();
   }
 
   ngOnInit(): void {
