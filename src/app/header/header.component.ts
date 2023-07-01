@@ -1,10 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {count, Observable} from 'rxjs';
-import {CartContentDTO} from '../model/cartcontent/cart-contentDTO';
 import {CartContentService} from '../service/cartcontent/cart-content.service';
-import {StaticVars} from '../config/static-vars';
 import {FirebaseAuthService} from "../service/firebase/firebase.service";
-import {CartStateService} from '../sidecart/cart-state.service';
+import {CartContent} from "../model/cartcontent/cart-content";
 
 
 @Component({
@@ -18,25 +15,20 @@ export class HeaderComponent implements OnInit {
   @Output()
   toggled: EventEmitter<any> = new EventEmitter<any>();
 
-  private cartContentService: CartContentService;
-  public cartContents: Observable<CartContentDTO[]>;
-  countService: CartStateService;
-  cartCount: number;
-  firebaseAuthService: FirebaseAuthService
   showCart: boolean = false;
   enteredSearchValue: string = '';
   showDiv: boolean = false;
+  cartContent: CartContent[];
 
-  constructor(cartContentService: CartContentService, firebaseAuthService: FirebaseAuthService, countService: CartStateService) {
-    this.firebaseAuthService = firebaseAuthService;
-    this.countService = countService
-    this.cartContentService = cartContentService;
-    this.cartContents = cartContentService.listCartContentByCartId(StaticVars.cartIdInUse);
-    this.cartCount = 0
-    this.cartContents.forEach((cartContent) => {
-      cartContent.forEach((content) => {
-        this.cartCount += content.anzahl;
-      });
+  constructor(
+    private cartContentService: CartContentService,
+    public firebaseAuthService: FirebaseAuthService,) {
+  }
+
+  ngOnInit(): void {
+    this.cartContentService.fetchCartContentByCartId(2);
+    this.cartContentService.getCartContent().subscribe((content: CartContent[]) => {
+      this.cartContent = content;
     });
   }
 
@@ -55,13 +47,9 @@ export class HeaderComponent implements OnInit {
 
   getCartCount() {
     let sum = 0
-    this.countService.getCartContents().forEach((cartContent) => {
+    this.cartContent.forEach((cartContent) => {
       sum += cartContent.anzahl;
     })
     return sum
   }
-
-  ngOnInit(): void {}
-
-  protected readonly count = count;
 }
