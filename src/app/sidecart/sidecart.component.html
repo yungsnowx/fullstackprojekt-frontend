@@ -5,7 +5,7 @@
     <hr/>
 
     <mat-nav-list>
-      <div *ngFor="let cartContent of getCartContent()">
+      <div *ngFor="let cartContent of cartContents">
         <div *ngIf="getProductById(cartContent.produktID) as product">
           <div mat-list-item class="productsInCart" *ngIf="cartContent.anzahl != 0">
             <p>
@@ -25,7 +25,7 @@
 
     <hr/>
     <div>
-      <p class="totalPrice">Gesamtpreis: {{ getSum() | currency : "EUR" : true }}</p>
+      <p class="totalPrice">Gesamtpreis: {{ priceSum | currency : "EUR" : true }}</p>
     </div>
 
     <!--Falls User nicht eingeloggt ist, wird er auf die Login Seite weitergeleitet-->

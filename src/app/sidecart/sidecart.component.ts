@@ -3,12 +3,12 @@ import {CartContentService} from '../service/cartcontent/cart-content.service';
 import {ProductDTO} from '../model/product/productDTO';
 import {NavigationEnd, Router} from '@angular/router';
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {CartStateService} from './cart-state.service';
 import {FirebaseAuthService} from "../service/firebase/firebase.service";
 import {Product} from "../model/product/product";
 import {ProductService} from "../service/product/product.service";
-import {CartDTO} from "../model/cart/cartDTO";
 import {CartService} from "../service/cart/cart.service";
+import {CartContent} from "../model/cartcontent/cart-content";
+import {CartDTO} from "../model/cart/cartDTO";
 
 @Component({
   selector: 'app-sidecart',
@@ -19,32 +19,36 @@ export class SidecartComponent implements OnInit {
   @Input() getCartValue: boolean = false;
   @Input() searchValue: string = '';
 
-  public cartContentService: CartContentService;
-  public productService: ProductService;
-
-  cartService: CartService;
-
+  cartContents: CartContent[]
   products: ProductDTO[];
+  priceSum: number = 0.0;
   currentPath: string = '';
-  cartStateService: CartStateService;
-  firebaseAuthService: FirebaseAuthService;
   cartId: number;
 
-  constructor(cartContentService: CartContentService, firebaseAuthService: FirebaseAuthService, productService: ProductService, private router: Router, private snackBar: MatSnackBar, cartStateService: CartStateService, cartService: CartService) {
-    this.firebaseAuthService = firebaseAuthService;
-    this.cartService = cartService;
-    this.cartContentService = cartContentService;
-    this.productService = productService;
-    this.cartStateService = cartStateService;
-    cartService.getActiveCartByUserId(this.firebaseAuthService.getFirebaseUser().uid).subscribe(cart => {
-      this.cartId = cart.warenkorbID;
-    })
-    this.cartContentService.listCartContentByCartId(this.cartId).subscribe(value => {
-      this.cartStateService.setCartContents(value)
-    })
+  constructor(private cartContentService: CartContentService,
+              private productService: ProductService,
+              private router: Router,
+              private snackBar: MatSnackBar,
+              private cartService: CartService,
+              public firebaseAuthService: FirebaseAuthService) {
+  }
+
+  ngOnInit() {
+    this.cartId = 2
     this.productService.listProducts().subscribe(value => {
       this.products = value;
     });
+    this.cartContentService.fetchCartContentByCartId(this.cartId)
+    this.cartContentService.getCartContent().subscribe(cartContents => {
+      this.cartContents = cartContents;
+      if (this.products != undefined) {
+        this.priceSum = 0.0;
+        this.cartContents.forEach(cartContent => {
+          let product = this.getProductById(cartContent.produktID)
+          this.priceSum += product.preis * cartContent.anzahl
+        })
+      }
+    })
     this.searchValue = '';
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -62,34 +66,21 @@ export class SidecartComponent implements OnInit {
     cartContent.anzahl--
     if (cartContent.anzahl == 0) {
       this.cartContentService.deleteCartContent(cartContent.warenkorbinhaltID)
-    } else {
-      this.cartContentService.updateCartContent(cartContent)
+      return;
     }
-  }
-
-  getSum() {
-    let sum = 0
-    for (let cartContent of this.getCartContent()) {
-      let product = this.getProductById(cartContent.produktID)
-      sum += product.preis * cartContent.anzahl
-    }
-    return sum
-  }
-
-  ngOnInit() {
+    this.cartContentService.updateCartContent(cartContent)
   }
 
 
   getProductById(id: number): Product {
+    if (this.products == undefined) {
+      return undefined;
+    }
     return this.products.find(product => product.produktID == id);
   }
 
-  getCartContent() {
-    return this.cartStateService.getCartContents()
-  }
-
   orderCart() {
-    if (this.getCartContent().length != 0) {
+    if (this.cartContents.length != 0) {
       //Cart aktualisieren
       this.cartService.updateCart(new CartDTO(this.cartId, "5", false))
 
