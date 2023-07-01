@@ -84,7 +84,13 @@ export class FirebaseAuthService {
   }
 
   getUserID(): string {
-    return this.auth.currentUser.uid;
+    if(this.auth.currentUser != null){
+      return this.auth.currentUser.uid;
+    }
+    else {
+      console.log("User is not logged in");
+      return null;
+    }
   }
 
   waitForAuth(): Promise<any> {

@@ -9,6 +9,7 @@ export class AppComponent {
   title = 'fullstackprojekt-frontend';
 
   searchText: string = '';
+  isAdmin: boolean;
 
   onSearchTextEntered(searchValue: string) {
     this.searchText = searchValue;
@@ -20,4 +21,6 @@ export class AppComponent {
   cartToggle(value: boolean) {
     this.cart = value;
   }
+
+  protected readonly localStorage = localStorage;
 }

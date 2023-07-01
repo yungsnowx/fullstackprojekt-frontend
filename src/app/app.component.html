@@ -1,2 +1,3 @@
 <app-header (searchTextChanged)="onSearchTextEntered($event)" (toggled)="cartToggle($event)"></app-header>
-<app-sidecart [searchValue]="searchText" [getCartValue]="cart"></app-sidecart>
+<app-sidecart  *ngIf="localStorage.getItem('isAdmin')!= 'true'" [searchValue]="searchText" [getCartValue]="cart"></app-sidecart>
+<app-product-list-for-admin *ngIf="localStorage.getItem('isAdmin')== 'true'"></app-product-list-for-admin>

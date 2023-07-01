@@ -32,6 +32,7 @@
 
     </button>
     <button
+      *ngIf="localStorage.getItem('isAdmin') != 'true'"
       mat-icon-button
       aria-label="Warenkorb"
       matTooltip="Warenkorb"

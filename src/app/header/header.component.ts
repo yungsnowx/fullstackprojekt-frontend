@@ -33,16 +33,17 @@ export class HeaderComponent implements OnInit {
     this.firebaseAuthService.waitForAuth().then(() => {
       this.cartService.getActiveCartByUserId(this.firebaseAuthService.getUserID()).subscribe((cart: CartDTO) => {
 
-
-        this.cartContentService.fetchCartContentByCartId(cart.warenkorbID);
-        this.cartContentService.getCartContent().subscribe((content: CartContent[]) => {
-          this.cartContent = content;
-          console.log(this.cartContent);
-          this.productCount = 0;
-          content.forEach((cartContent: CartContent) => {
-            this.productCount += cartContent.anzahl;
-          })
-        });
+        if (cart != null) {
+          this.cartContentService.fetchCartContentByCartId(cart.warenkorbID);
+          this.cartContentService.getCartContent().subscribe((content: CartContent[]) => {
+            this.cartContent = content;
+            console.log(this.cartContent);
+            this.productCount = 0;
+            content.forEach((cartContent: CartContent) => {
+              this.productCount += cartContent.anzahl;
+            })
+          });
+        }
       });
 
 
@@ -60,7 +61,11 @@ export class HeaderComponent implements OnInit {
 
   logOut() {
     this.firebaseAuthService.logout();
+    localStorage.setItem('isAdmin', JSON.stringify(false));
+    window.location.reload();
+
   }
 
 
+  protected readonly localStorage = localStorage;
 }
