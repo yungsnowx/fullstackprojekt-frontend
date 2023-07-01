@@ -29,6 +29,7 @@
       matTooltip="Suche starten"
     >
       <span class="material-icons">search</span>
+
     </button>
     <button
       mat-icon-button
@@ -52,8 +53,8 @@
       aria-label="login"
       matTooltip="Anmelden"
       [routerLink]="'log_in'"
-      class="userButton"
-    >Anmelden
+      class="userButton">
+      Anmelden
     </button>
     <button
       *ngIf="this.firebaseAuthService.getFirebaseUser() == null"
