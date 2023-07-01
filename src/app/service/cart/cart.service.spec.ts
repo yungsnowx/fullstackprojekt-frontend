@@ -19,16 +19,26 @@ describe("CartService",() =>{
     })
     
     it("should get the cart with the cart number 1",() =>{
+        let cart = new CartDTO(1,1,true)
         cartService.getCartbyId(1).subscribe(
             data => {
-                console.log(data)
-                expect(data).toEqual(new CartDTO(1,1,true))                }
-            )
-        const req = testingController.expectOne("/warenkorb/:1")
-        expect(req.request.method).toEqual("GET")
-        req.flush(new CartDTO(1,1,true))
+                expect(data).toEqual(cart.getCart())                
+            })
+        const request = testingController.expectOne("/warenkorb/:1")
+        expect(request.request.method).toEqual("GET")
+        request.flush(cart.getCart())
         testingController.verify()
     })
-    
-    
+    it("should get the cart with the userId 1",() => {
+        let cart = new CartDTO(1,1,true)
+        cartService.getCartByUserId("1").subscribe(
+            data =>{
+                expect(data).toEqual(cart)
+            }
+        )
+        const request = testingController.expectOne("/warenkorb/user/1")
+        expect(request.request.method).toEqual("GET")
+        request.flush(cart)
+        testingController.verify()
+    })
 })

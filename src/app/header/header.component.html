@@ -32,7 +32,7 @@
       matTooltip="Suche starten"
     >
 
-        <span class="material-icons">search</span>
+      <span class="material-icons">search</span>
 
     </button>
 
@@ -46,9 +46,7 @@
         class="material-icons"
         matBadge="{{ countService.getCount() }}"
         matBadgePosition="below after"
-        matBadgeColor="accent"
-
-    >
+        matBadgeColor="accent">
         shopping_bag
       </span>
     </button>
@@ -59,8 +57,8 @@
       aria-label="login"
       matTooltip="Anmelden"
       [routerLink]="'log_in'"
-      class="userButton"
-    >Anmelden
+      class="userButton">
+      Anmelden
     </button>
     <button
       *ngIf="this.firebaseAuthService.getFirebaseUser() == null"
