@@ -1,16 +1,18 @@
-export class OrderDTO{
-    
+import {Order} from "./order";
+
+export class OrderDTO implements Order{
+
     public bestellID:number;
     public warenkorbID:number;
     public lieferadresse:number;
     public rechnungsadresse:number;
-    public bezahlt: number;
+    public bezahlt: boolean;
     public datum:Date;
 
-    construtor(bestellID:number,warenkorb:number, lieferadresse:number
-        ,rechnungsadresse:number,bezahlt:number, datum:Date ){
+    constructor(bestellID:number,warenkorbID:number, lieferadresse:number
+        ,rechnungsadresse:number,bezahlt:boolean, datum:Date ){
         this.bestellID = bestellID;
-        this.warenkorbID = warenkorb;
+        this.warenkorbID = warenkorbID;
         this.lieferadresse = lieferadresse;
         this.rechnungsadresse = rechnungsadresse;
         this.bezahlt = bezahlt;
@@ -20,6 +22,16 @@ export class OrderDTO{
     getOrderDTO(){
         return {
             bestellID: this.bestellID,
+            warenkorbID: this.warenkorbID,
+            lieferadresse: this.lieferadresse,
+            rechnungsadresse:  this.rechnungsadresse,
+            bezahlt: this.bezahlt,
+            datum: this.datum
+        }
+    }
+
+    getWithoutId(){
+        return {
             warenkorbID: this.warenkorbID,
             lieferadresse: this.lieferadresse,
             rechnungsadresse:  this.rechnungsadresse,
