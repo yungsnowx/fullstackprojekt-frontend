@@ -23,7 +23,6 @@ export class SidecartComponent implements OnInit {
   products: ProductDTO[];
   priceSum: number = 0.0;
   currentPath: string = '';
-  cartId: number;
 
   constructor(private cartContentService: CartContentService,
               private productService: ProductService,
@@ -34,7 +33,6 @@ export class SidecartComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.cartId = 2
     this.productService.listProducts().subscribe(value => {
       this.products = value;
     });
@@ -78,16 +76,26 @@ export class SidecartComponent implements OnInit {
     return this.products.find(product => product.produktID == id);
   }
 
+  /*+
+  * Bestellt den Warenkorb des aktuellen Users
+  *
+   */
   orderCart() {
     let userID = this.firebaseAuthService.getUserID()
     if (this.cartContents.length != 0) {
       //Cart aktualisieren
-      this.cartService.updateCart(new CartDTO(this.cartId, userID, false))
-      this.snackBar.open("Bestellung wurde aufgegeben", "OK",);
-      console.log(this.getCartValue)
+      this.cartService.getActiveCartByUserId(userID).subscribe((cart: CartDTO) => {
+        cart.istAktiv = false;
+        this.cartService.updateCart(cart)
+        this.snackBar.open("Bestellung wurde aufgegeben", "OK",);
+      });
+      this.cartService.addCart(new CartDTO(0, userID, true)).subscribe((cart: CartDTO) => {
+        this.cartContentService.fetchCartContentByCartId(cart.warenkorbID);
+      });
     } else {
       this.snackBar.open("Warenkorb ist leer", "OK",);
     }
+
   }
 }
 
