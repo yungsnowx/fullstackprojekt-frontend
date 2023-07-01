@@ -8,10 +8,8 @@ import { OrderDTO } from 'src/app/model/bestellung/orderDTO';
   providedIn: 'root',
 })
 
-
 export class  OrderService{
     url = "/bestellung"
-
     constructor(private httpClient:HttpClient){}
 
     getAllOrder():Observable<OrderDTO[]>{
@@ -34,6 +32,6 @@ export class  OrderService{
     }
     deleteOrder(id:number){
         console.log("execute deleteOrder")
-        return this.httpClient.delete(this.url + `/:${id}`)
+        return this.httpClient.delete(this.url + `/:${id}`).subscribe()
     }
 }
