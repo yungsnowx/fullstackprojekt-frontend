@@ -9,6 +9,8 @@ import {ProductService} from "../service/product/product.service";
 import {CartService} from "../service/cart/cart.service";
 import {CartContent} from "../model/cartcontent/cart-content";
 import {CartDTO} from "../model/cart/cartDTO";
+import {OrderService} from "../service/order/order.service";
+import {OrderDTO} from "../model/order/orderDTO";
 
 @Component({
   selector: 'app-sidecart',
@@ -29,7 +31,8 @@ export class SidecartComponent implements OnInit {
               private router: Router,
               private snackBar: MatSnackBar,
               private cartService: CartService,
-              public firebaseAuthService: FirebaseAuthService) {
+              public firebaseAuthService: FirebaseAuthService,
+              private orderService: OrderService) {
   }
 
   ngOnInit() {
@@ -87,6 +90,7 @@ export class SidecartComponent implements OnInit {
       this.cartService.getActiveCartByUserId(userID).subscribe((cart: CartDTO) => {
         cart.istAktiv = false;
         this.cartService.updateCart(cart)
+        this.orderService.addOrder(new OrderDTO(0, cart.warenkorbID, 1,1, false,undefined))
         this.snackBar.open("Bestellung wurde aufgegeben", "OK",);
       });
       this.cartService.addCart(new CartDTO(0, userID, true)).subscribe((cart: CartDTO) => {

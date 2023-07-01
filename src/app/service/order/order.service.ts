@@ -1,7 +1,7 @@
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { OrderDTO } from 'src/app/model/bestellung/orderDTO';
+import { OrderDTO } from 'src/app/model/order/orderDTO';
 
 
 @Injectable({
@@ -23,15 +23,17 @@ export class  OrderService{
     addOrder(orderDTO:OrderDTO){
         console.log("execute addOrder")
         const headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.httpClient.post(this.url,orderDTO.getOrderDTO(),{headers}).subscribe()
+        return this.httpClient.post(this.url,orderDTO.getWithoutId(),{headers}).subscribe()
     }
     updateOrder(orderDTO:OrderDTO){
         console.log("execute updateOrder")
         const headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this.httpClient.put(this.url,orderDTO.getOrderDTO,{headers}).subscribe()
+        return this.httpClient.put(this.url,orderDTO.getOrderDTO(),{headers}).subscribe()
     }
     deleteOrder(id:number){
         console.log("execute deleteOrder")
         return this.httpClient.delete(this.url + `/:${id}`).subscribe()
     }
+
+
 }

@@ -3,6 +3,6 @@ export interface Order{
     warenkorbID:number,
     lieferadresse:number,
     rechnungsadresse:number,
-    bezahlt: number
+    bezahlt: boolean
     datum:Date
 }
