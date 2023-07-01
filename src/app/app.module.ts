@@ -31,6 +31,7 @@ import {initializeApp, provideFirebaseApp} from '@angular/fire/app';
 import {environment} from '../environments/environment';
 import {provideAuth, getAuth} from '@angular/fire/auth';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { ProductListForAdminComponent } from './product-list-for-admin/product-list-for-admin.component';
 
 registerLocaleData(localeDe);
 
@@ -43,6 +44,7 @@ registerLocaleData(localeDe);
     LogInComponent,
     SignUpComponent,
     SidecartComponent,
+    ProductListForAdminComponent,
 
   ],
   imports: [

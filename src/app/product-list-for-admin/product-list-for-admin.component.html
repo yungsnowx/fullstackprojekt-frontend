@@ -1,0 +1,18 @@
+<h1>Produkte des Shops</h1>
+
+<div class="container">
+    <div *ngFor="let product of products | async; let i = index">
+        <div class="container2">
+            <div class="adminProduktContainer">
+                <p class="adminProduktzahl">Produkt {{ i+1 }}</p>
+                <img class="adminImage" src="http://localhost:3000/images/{{ product.bild }}">
+                <div>
+                    <div>- imagepath: {{ product.bild }}</div>
+                    <div>- Name: {{ product.produktname }}</div>
+                    <div>- Beschreibung: {{ product.produktbeschreibung }}</div>
+                    <div>- Preis: {{ product.preis }}€</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
