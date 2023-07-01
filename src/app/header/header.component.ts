@@ -2,6 +2,8 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {CartContentService} from '../service/cartcontent/cart-content.service';
 import {FirebaseAuthService} from "../service/firebase/firebase.service";
 import {CartContent} from "../model/cartcontent/cart-content";
+import {CartService} from "../service/cart/cart.service";
+import {CartDTO} from "../model/cart/cartDTO";
 
 
 @Component({
@@ -19,17 +21,32 @@ export class HeaderComponent implements OnInit {
   enteredSearchValue: string = '';
   showDiv: boolean = false;
   cartContent: CartContent[];
+  productCount: number = 0
 
   constructor(
     private cartContentService: CartContentService,
-    public firebaseAuthService: FirebaseAuthService,) {
+    public firebaseAuthService: FirebaseAuthService,
+    private cartService: CartService) {
   }
 
   ngOnInit(): void {
-    this.cartContentService.fetchCartContentByCartId(2);
-    this.cartContentService.getCartContent().subscribe((content: CartContent[]) => {
-      this.cartContent = content;
-    });
+    let cartId;
+    this.firebaseAuthService.waitForAuth().then(() => {
+      this.cartService.getActiveCartByUserId(this.firebaseAuthService.getUserID()).subscribe((cart: CartDTO) => {
+        cartId = cart.warenkorbID;
+
+        this.cartContentService.fetchCartContentByCartId(cartId);
+        this.cartContentService.getCartContent().subscribe((content: CartContent[]) => {
+          this.cartContent = content;
+          console.log(this.cartContent);
+          content.forEach((cartContent: CartContent) => {
+            this.productCount += cartContent.anzahl;
+          })
+        });
+      });
+
+
+    })
   }
 
   onSearchTextChanged() {
@@ -45,11 +62,5 @@ export class HeaderComponent implements OnInit {
     this.firebaseAuthService.logout();
   }
 
-  getCartCount() {
-    let sum = 0
-    this.cartContent.forEach((cartContent) => {
-      sum += cartContent.anzahl;
-    })
-    return sum
-  }
+
 }

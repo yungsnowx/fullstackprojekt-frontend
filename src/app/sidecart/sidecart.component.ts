@@ -38,7 +38,6 @@ export class SidecartComponent implements OnInit {
     this.productService.listProducts().subscribe(value => {
       this.products = value;
     });
-    this.cartContentService.fetchCartContentByCartId(this.cartId)
     this.cartContentService.getCartContent().subscribe(cartContents => {
       this.cartContents = cartContents;
       if (this.products != undefined) {
@@ -80,11 +79,12 @@ export class SidecartComponent implements OnInit {
   }
 
   orderCart() {
+    let userID = this.firebaseAuthService.getUserID()
     if (this.cartContents.length != 0) {
       //Cart aktualisieren
-      this.cartService.updateCart(new CartDTO(this.cartId, "5", false))
-
+      this.cartService.updateCart(new CartDTO(this.cartId, userID, false))
       this.snackBar.open("Bestellung wurde aufgegeben", "OK",);
+      console.log(this.getCartValue)
     } else {
       this.snackBar.open("Warenkorb ist leer", "OK",);
     }
