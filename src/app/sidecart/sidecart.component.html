@@ -2,33 +2,55 @@
   <mat-sidenav #sidenav opened="{{ getCartValue }}" position="end" mode="side">
     <h1>Ihr Warenkorb</h1>
 
-    <hr />
+    <hr/>
 
     <mat-nav-list>
-      <div *ngFor="let product of productsList ">
-        <div mat-list-item class="productsInCart" *ngIf="product.anzahl != 0">
-          
-          <p>
-            <button mat-mini-fab color="primary"(click)="reduceProduct(product)">-</button>
-            {{ product.anzahl }}x&nbsp;
-            <button mat-mini-fab color="primary" (click)="addProduct(product)">+</button>
-          </p>
-          
-          <p>{{ product.product.produktname }}</p>
-          <p>{{
-            product.product.preis * product.anzahl
-              | currency : "EUR" : true
-          }}</p>
+      <div *ngFor="let cartContent of getCartContent()">
+        <div *ngIf="getProductById(cartContent.produktID) as product">
+          <div mat-list-item class="productsInCart" *ngIf="cartContent.anzahl != 0">
+            <p>
+              {{ cartContent.anzahl }}x&nbsp;
+            </p>
+            <div class="quantityButtonsInCart">
+              <button (click)="reduceProductCount(cartContent)">-</button>
+              <button (click)="increaseProductCount(cartContent)">+</button>
+            </div>
+            <p class="productNameInCart">{{ product.produktname }}</p>
+            <p class="priceInCart">{{ product.preis * cartContent.anzahl | currency : "EUR" : "symbol"
+              }}</p>
+          </div>
         </div>
       </div>
     </mat-nav-list>
-    <button class="bestellButton" mat-flat-button color="primary" (click)="orderCart()">
+
+    <hr/>
+    <div>
+      <p class="totalPrice">Gesamtpreis: {{ getSum() | currency : "EUR" : "symbol" }}</p>
+    </div>
+
+    <!--Falls User nicht eingeloggt ist, wird er auf die Login Seite weitergeleitet-->
+    <button
+      *ngIf="this.firebaseAuthService.getFirebaseUser() == null; else loggedIn"
+      class="bestellButton" mat-flat-button
+      color="primary"
+      [routerLink]="'log_in'">
       Bestellen
     </button>
+    <!--Falls er angemeldet ist wird, wird die "orderCart()" aufgerufen    -->
+    <ng-template #loggedIn>
+      <button
+        class="bestellButton" mat-flat-button
+        color="primary"
+        (click)="orderCart()">
+        Bestellen
+      </button>
+    </ng-template>
+
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <app-mainscreen *ngIf=" currentPath== '/' " [searchValue]="searchValue" (itemsProductEvent)="receivedItems($event)"></app-mainscreen>
+    <app-mainscreen *ngIf=" currentPath== '/' " [searchValue]="searchValue"
+    ></app-mainscreen>
     <router-outlet *ngIf=" currentPath != '/' "></router-outlet>
   </mat-sidenav-content>
 
