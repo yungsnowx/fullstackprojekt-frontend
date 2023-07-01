@@ -20,6 +20,13 @@ export class ProductComponent {
               public cartContentService: CartContentService) {
   }
 
+  /**
+   * Diese Methode fügt ein Produkt zum Warenkorb hinzu.
+   * Dazu wird zunächst geprüft, ob das Produkt bereits im Warenkorb ist.
+   * Falls ja, wird die Anzahl des Produkts im Warenkorb um 1 erhöht.
+   * Falls nein, wird das Produkt mit der Anzahl 1 zum Warenkorb hinzugefügt.
+   * pipe(take(1)) sorgt dafür, dass die Subscription nach dem ersten Wert beendet wird.
+   */
   addProductToCart() {
     let productAlreadyInCart: boolean = false;
 

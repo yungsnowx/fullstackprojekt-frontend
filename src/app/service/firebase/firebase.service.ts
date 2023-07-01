@@ -82,4 +82,17 @@ export class FirebaseAuthService {
       );
     return null;
   }
+
+  getUserID(): string {
+    return this.auth.currentUser.uid;
+  }
+
+  waitForAuth(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const unsubscribe = this.auth.onAuthStateChanged(user => {
+        unsubscribe();
+        resolve(user);
+      }, reject);
+    });
+  }
 }
