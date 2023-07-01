@@ -29,10 +29,10 @@
       matTooltip="Suche starten"
     >
       <span class="material-icons">search</span>
-
     </button>
     <button
       mat-icon-button
+      *ngIf="this.firebaseAuthService.getFirebaseUser() != null"
       aria-label="Warenkorb"
       matTooltip="Warenkorb"
       (click)="cartClicked()"
@@ -42,10 +42,18 @@
         matBadge="{{ productCount }}"
         matBadgePosition="below after"
         matBadgeColor="accent"
-
       >
         shopping_bag
       </span>
+    </button>
+    <button
+      mat-icon-button
+      *ngIf="isAdmin"
+      aria-label="Admin-Panel"
+      matTooltip="Admin-Panel"
+      (click)="navToAdminPanel()"
+    >
+      <span class="material-icons"> admin_panel_settings </span>
     </button>
     <button
       *ngIf="this.firebaseAuthService.getFirebaseUser() == null"
@@ -53,7 +61,8 @@
       aria-label="login"
       matTooltip="Anmelden"
       [routerLink]="'log_in'"
-      class="userButton">
+      class="userButton"
+    >
       Anmelden
     </button>
     <button
@@ -63,7 +72,8 @@
       matTooltip="Registrieren"
       [routerLink]="'sign_up'"
       class="userButton"
-    >Registrieren
+    >
+      Registrieren
     </button>
     <button
       *ngIf="this.firebaseAuthService.getFirebaseUser() != null"
@@ -71,9 +81,9 @@
       aria-label="logout"
       matTooltip="Abmelden"
       (click)="logOut()"
-      class="userButton">
+      class="userButton"
+    >
       Abmelden
     </button>
   </div>
 </mat-toolbar>
-

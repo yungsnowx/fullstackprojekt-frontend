@@ -1,10 +1,10 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {CartContentService} from '../service/cartcontent/cart-content.service';
-import {FirebaseAuthService} from "../service/firebase/firebase.service";
-import {CartContent} from "../model/cartcontent/cart-content";
-import {CartService} from "../service/cart/cart.service";
-import {CartDTO} from "../model/cart/cartDTO";
-
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { CartDTO } from '../model/cart/cartDTO';
+import { CartContent } from '../model/cartcontent/cart-content';
+import { CartService } from '../service/cart/cart.service';
+import { CartContentService } from '../service/cartcontent/cart-content.service';
+import { FirebaseAuthService } from '../service/firebase/firebase.service';
+import { UserService } from '../service/user/user.service';
 
 @Component({
   selector: 'app-header',
@@ -21,32 +21,39 @@ export class HeaderComponent implements OnInit {
   enteredSearchValue: string = '';
   showDiv: boolean = false;
   cartContent: CartContent[];
-  productCount: number = 0
+  productCount: number = 0;
+  isAdmin: boolean = false;
 
   constructor(
     private cartContentService: CartContentService,
     public firebaseAuthService: FirebaseAuthService,
-    private cartService: CartService) {
-  }
+    private cartService: CartService,
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
     this.firebaseAuthService.waitForAuth().then(() => {
-      this.cartService.getActiveCartByUserId(this.firebaseAuthService.getUserID()).subscribe((cart: CartDTO) => {
-
-
-        this.cartContentService.fetchCartContentByCartId(cart.warenkorbID);
-        this.cartContentService.getCartContent().subscribe((content: CartContent[]) => {
-          this.cartContent = content;
-          console.log(this.cartContent);
-          this.productCount = 0;
-          content.forEach((cartContent: CartContent) => {
-            this.productCount += cartContent.anzahl;
-          })
+      this.cartService
+        .getActiveCartByUserId(this.firebaseAuthService.getUserID())
+        .subscribe((cart: CartDTO) => {
+          this.cartContentService.fetchCartContentByCartId(cart.warenkorbID);
+          this.cartContentService
+            .getCartContent()
+            .subscribe((content: CartContent[]) => {
+              this.cartContent = content;
+              console.log(this.cartContent);
+              this.productCount = 0;
+              content.forEach((cartContent: CartContent) => {
+                this.productCount += cartContent.anzahl;
+              });
+            });
         });
-      });
-
-
-    })
+      this.userService
+        .getUser(this.firebaseAuthService.getUserID())
+        .subscribe((user) => {
+          this.isAdmin = user.isAdmin;
+        });
+    });
   }
 
   onSearchTextChanged() {
@@ -60,7 +67,11 @@ export class HeaderComponent implements OnInit {
 
   logOut() {
     this.firebaseAuthService.logout();
+    window.location.href = '/#/';
+    window.location.reload();
   }
 
-
+  navToAdminPanel() {
+    window.location.href = '/#/admin';
+  }
 }
