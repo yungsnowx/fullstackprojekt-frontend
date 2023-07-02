@@ -21,9 +21,11 @@ git clone "https://github.com/yungsnowx/fullstackprojekt-frontend.git"
 bash fullstackprojekt-backend/start_database_for_mac.sh
 
 # Backend starten
-cd fullstackprojekt-backend && npm install && npm start &
-wait
+cd fullstackprojekt-backend;
+npm start &
 
 # Frontend starten
-cd ../fullstackprojekt-frontend && npm install && "ng serve --open --proxy-config proxy.conf.json" &
-wait
+cd ../fullstackprojekt-frontend;
+npm start &
+
+open http://localhost:4200/
