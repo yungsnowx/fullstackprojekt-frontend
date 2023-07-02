@@ -36,6 +36,11 @@ export class LogInComponent implements OnInit {
 
   logIn() {
     this.firebaseAuthService.logIn(this.email.value, this.password.value);
+
+    localStorage.setItem('isAdmin', JSON.stringify(this.userService.getUser(this.firebaseAuthService.getUserID()) .subscribe(data => {
+        data.isAdmin
+      }
+    )));
   }
 
 }
