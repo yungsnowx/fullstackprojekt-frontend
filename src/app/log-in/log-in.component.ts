@@ -41,4 +41,7 @@ export class LogInComponent implements OnInit {
   logIn() {
     this.firebaseAuthService.logIn(this.email.value, this.password.value);
   }
+  logInWithGoogle() {
+    this.firebaseAuthService.signInWithGoogle();
+  }
 }

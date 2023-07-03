@@ -21,20 +21,26 @@ export class UserService {
     return this.httpClient.get<UserDTO>(this.url + `/${id}`);
   }
 
-  public saveUser(user: UserDTO) {
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+  public saveUser(user: UserDTO, authToken: string) {
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${authToken}`);
     console.log('execute saveUser');
-    return this.httpClient.post(this.url, user, { headers }).subscribe();
+    return this.httpClient.post(this.url, user, { headers });
   }
 
-  public updateUser(user: UserDTO) {
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+  public updateUser(user: UserDTO, authToken: string) {
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${authToken}`);
     console.log('execute updateUser');
     return this.httpClient.put(this.url, user, { headers }).subscribe();
   }
 
-  public deleteUser(id: string) {
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+  public deleteUser(id: string, authToken: string) {
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${authToken}`);
     console.log('execute deleteUser');
     return this.httpClient.delete(this.url + `/:${id}`, { headers });
   }

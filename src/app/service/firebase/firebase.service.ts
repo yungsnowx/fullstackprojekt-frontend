@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
 import {
   Auth,
+  GoogleAuthProvider,
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
 } from '@angular/fire/auth';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { take } from 'rxjs';
 import { CartDTO } from '../../model/cart/cartDTO';
 import { UserDTO } from '../../model/user/userDTO';
 import { CartService } from '../cart/cart.service';
-import { CartContentService } from '../cartcontent/cart-content.service';
 import { UserService } from '../user/user.service';
 
 @Injectable({
@@ -23,7 +25,6 @@ export class FirebaseAuthService {
     private auth: Auth,
     private userService: UserService,
     private cartService: CartService,
-    private cartContentService: CartContentService,
     private router: Router,
     private snackBar: MatSnackBar
   ) {}
@@ -33,7 +34,11 @@ export class FirebaseAuthService {
   }
 
   logout() {
-    signOut(this.auth);
+    signOut(this.auth).then(() => {
+      this.router.navigate(['/']).then(() => {
+        window.location.reload();
+      });
+    });
   }
 
   resetPassword(email: string) {
@@ -43,10 +48,12 @@ export class FirebaseAuthService {
   logIn(email: string, password: string) {
     signInWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
-        // Signed in
         const user = userCredential.user;
         console.log(user);
-        window.location.reload();
+        // Signed in
+        this.router.navigate(['/']).then(() => {
+          window.location.reload();
+        });
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -61,7 +68,9 @@ export class FirebaseAuthService {
     createUserWithEmailAndPassword(this.auth, email, password).then(
       (userCredential) => {
         // Signed in
-        this.router.navigate(['#']);
+        this.router.navigate(['/']).then(() => {
+          window.location.reload();
+        });
         const user = userCredential.user;
         console.log(user);
       }
@@ -73,7 +82,7 @@ export class FirebaseAuthService {
     password: string,
     vorname: string,
     nachname: string
-  ) {
+  ): UserDTO {
     createUserWithEmailAndPassword(this.auth, email, password).then(
       (userCredential) => {
         // Signed in
@@ -85,15 +94,24 @@ export class FirebaseAuthService {
           nachname,
           false
         );
-        this.userService.saveUser(userObject);
-        user.getIdToken().then((token) => {
-          this.cartService.addCart(new CartDTO(0, user.uid, true)).subscribe();
+        userCredential.user.getIdToken().then((token) => {
+          this.userService
+            .saveUser(userObject, token)
+            .pipe(take(1))
+            .subscribe(() => {
+              this.cartService
+                .addCart(new CartDTO(0, user.uid, true))
+                .subscribe(() => {
+                  this.router.navigate(['/']).then(() => {
+                    window.location.reload();
+                  });
+                });
+            });
         });
-
-        window.location.href = '/#/';
-        window.location.reload();
+        return userObject;
       }
     );
+    return null;
   }
 
   getUserID(): string {
@@ -106,6 +124,29 @@ export class FirebaseAuthService {
         unsubscribe();
         resolve(user);
       }, reject);
+    });
+  }
+
+  signInWithGoogle() {
+    signInWithPopup(this.auth, new GoogleAuthProvider()).then((result) => {
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const user = result.user;
+      console.log(user);
+      let userObject: UserDTO = new UserDTO(user.uid, 'Google', 'User', false);
+      result.user.getIdToken().then((token) => {
+        this.userService
+          .saveUser(userObject, token)
+          .pipe(take(1))
+          .subscribe(() => {
+            this.cartService
+              .addCart(new CartDTO(0, user.uid, true))
+              .subscribe(() => {
+                this.router.navigate(['/']).then(() => {
+                  window.location.reload();
+                });
+              });
+          });
+      });
     });
   }
 }

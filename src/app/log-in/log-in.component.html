@@ -1,24 +1,43 @@
-<form class="log_in"  (submit)="logIn()">
-  <mat-form-field>
+<div class="container">
+  <form class="log_in" (submit)="logIn()">
+    <mat-form-field>
       <mat-label>Email</mat-label>
-      <input matInput  placeholder="musterman@exemple.com" [formControl]="email" required>
-      <mat-error *ngIf="email.invalid">{{getErrorMessage("E-Mail",email)}}</mat-error>
+      <input
+        matInput
+        placeholder="musterman@exemple.com"
+        [formControl]="email"
+        required
+      />
+      <mat-error *ngIf="email.invalid">{{
+        getErrorMessage("E-Mail", email)
+      }}</mat-error>
+    </mat-form-field>
 
+    <mat-form-field>
+      <mat-label>Passwort</mat-label>
+      <input
+        matInput
+        [type]="hide ? 'password' : 'text'"
+        [formControl]="password"
+        required
+      />
+      <mat-error *ngIf="password.invalid">{{
+        getErrorMessage("Passwort", password)
+      }}</mat-error>
+      <button
+        mat-icon-button
+        matSuffix
+        (click)="hide = !hide"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hide"
+      >
+        <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+      </button>
+    </mat-form-field>
 
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-label>Passwort</mat-label>
-    <input matInput [type]="hide ? 'password' : 'text'" [formControl]="password" required>
-    <mat-error *ngIf="password.invalid">{{getErrorMessage("Passwort",password)}}</mat-error>
-    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" >
-      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-
-    </button>
-  </mat-form-field>
-
-  <button mat-flat-button
-    color="primary"
-    type="submit">Einloggen</button>
-
-</form>
+    <button mat-flat-button color="primary" type="submit">Einloggen</button>
+  </form>
+  <button mat-raised-button class="googleButton" (click)="logInWithGoogle()">
+    <img src="/assets/google-logo.svg" /> Login with Google
+  </button>
+</div>
