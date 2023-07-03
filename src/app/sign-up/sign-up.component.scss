@@ -1,33 +1,47 @@
-h1{
-    text-align: center;
+h1 {
+  text-align: center;
 }
-form{
-    margin-top: 20px;
-    margin-bottom: 20px;
+form {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  .User_information,
+  .Address_information {
     display: flex;
-    flex-direction:  column;
-    .User_information,.Address_information{
-        display: flex;
-        flex-direction: column;
-        width: 50%;
-        align-self: center;
+    flex-direction: column;
+    width: 50%;
+    align-self: center;
+  }
+  .info_set {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    mat-form-field {
+      width: 100%;
     }
-    .info_set{
-        display: flex;
-        flex-direction: row;
-        justify-content:  space-between;
-        width: 100%;
-        mat-form-field{
-            width: 100%;
-        }
-        #plz,#hausnummer{
-            margin-left: 10px;
-            width: 40%;
-        }
+    #plz,
+    #hausnummer {
+      margin-left: 10px;
+      width: 40%;
     }
-    button{
-        width: 50%;
-        align-self: center ;
-        margin-bottom: 10px;
+  }
+  button {
+    width: 50%;
+    align-self: center;
+    margin-bottom: 10px;
+  }
+}
+.googleContainer {
+  display: flex;
+  flex-direction: column;
+  button {
+    align-self: center;
+    margin-top: 10px;
+    width: 50%;
+    img {
+      width: 1.25em;
     }
+  }
 }

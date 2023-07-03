@@ -1,13 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, Validators} from "@angular/forms";
-import {UserService} from "../service/user/user.service";
-import {FirebaseAuthService} from "../service/firebase/firebase.service";
-
+import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
+import { FirebaseAuthService } from '../service/firebase/firebase.service';
+import { UserService } from '../service/user/user.service';
 
 @Component({
   selector: 'app-log-in',
   templateUrl: './log-in.component.html',
-  styleUrls: ['./log-in.component.scss']
+  styleUrls: ['./log-in.component.scss'],
 })
 export class LogInComponent implements OnInit {
   email: FormControl;
@@ -16,10 +15,13 @@ export class LogInComponent implements OnInit {
   userService: UserService;
   firebaseAuthService: FirebaseAuthService;
 
-  constructor(userService: UserService, firebaseAuthService: FirebaseAuthService) {
+  constructor(
+    userService: UserService,
+    firebaseAuthService: FirebaseAuthService
+  ) {
     this.hide = true;
     this.password = new FormControl();
-    this.email = new FormControl("", [Validators.required, Validators.email]);
+    this.email = new FormControl('', [Validators.required, Validators.email]);
     this.userService = userService;
     this.firebaseAuthService = firebaseAuthService;
   }
@@ -28,14 +30,16 @@ export class LogInComponent implements OnInit {
     if (object.hasError('required')) {
       return `${text} ist leer`;
     }
-    return object.hasError('email') ? 'Keine korrekte E-Mail' : "";
+    return object.hasError('email') ? 'Keine korrekte E-Mail' : '';
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   logIn() {
     this.firebaseAuthService.logIn(this.email.value, this.password.value);
   }
 
+  logInWithGoogle() {
+    this.firebaseAuthService.signInWithGoogle();
+  }
 }
