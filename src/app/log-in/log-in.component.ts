@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { FirebaseAuthService } from '../service/firebase/firebase.service';
 import { UserService } from '../service/user/user.service';
 
@@ -12,19 +13,12 @@ export class LogInComponent implements OnInit {
   email: FormControl;
   hide: boolean;
   password: FormControl;
-  userService: UserService;
-  firebaseAuthService: FirebaseAuthService;
 
   constructor(
-    userService: UserService,
-    firebaseAuthService: FirebaseAuthService
-  ) {
-    this.hide = true;
-    this.password = new FormControl();
-    this.email = new FormControl('', [Validators.required, Validators.email]);
-    this.userService = userService;
-    this.firebaseAuthService = firebaseAuthService;
-  }
+    private userService: UserService,
+    private firebaseAuthService: FirebaseAuthService,
+    private router: Router
+  ) {}
 
   getErrorMessage(text: string, object: FormControl) {
     if (object.hasError('required')) {
@@ -33,12 +27,20 @@ export class LogInComponent implements OnInit {
     return object.hasError('email') ? 'Keine korrekte E-Mail' : '';
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.hide = true;
+    this.password = new FormControl();
+    this.email = new FormControl('', [Validators.required, Validators.email]);
+    this.firebaseAuthService.waitForAuth().then(() => {
+      if (this.firebaseAuthService.getFirebaseUser() != null) {
+        this.router.navigate(['/']);
+      }
+    });
+  }
 
   logIn() {
     this.firebaseAuthService.logIn(this.email.value, this.password.value);
   }
-
   logInWithGoogle() {
     this.firebaseAuthService.signInWithGoogle();
   }

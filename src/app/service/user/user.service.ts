@@ -18,7 +18,7 @@ export class UserService {
 
   public getUser(id: string): Observable<UserDTO> {
     console.log(`execute getUser with id ${id}`);
-    return this.httpClient.get<UserDTO>(this.url + `/:${id}`);
+    return this.httpClient.get<UserDTO>(this.url + `/${id}`);
   }
 
   public saveUser(user: UserDTO, authToken: string) {
