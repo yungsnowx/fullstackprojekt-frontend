@@ -32,28 +32,43 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.firebaseAuthService.waitForAuth().then(() => {
-      this.cartService
-        .getActiveCartByUserId(this.firebaseAuthService.getUserID())
-        .subscribe((cart: CartDTO) => {
-          this.cartContentService.fetchCartContentByCartId(cart.warenkorbID);
-          this.cartContentService
-            .getCartContent()
-            .subscribe((content: CartContent[]) => {
-              this.cartContent = content;
-              console.log(this.cartContent);
-              this.productCount = 0;
-              content.forEach((cartContent: CartContent) => {
-                this.productCount += cartContent.anzahl;
-              });
+    if (this.firebaseAuthService.getFirebaseUser() == null) {
+      this.firebaseAuthService.waitForAuth().then(() => {
+        if (this.firebaseAuthService.getFirebaseUser() != null) {
+          this.initCart();
+          this.setAdmin();
+        }
+      });
+    } else {
+      this.initCart();
+      this.setAdmin();
+    }
+  }
+
+  initCart() {
+    this.cartService
+      .getActiveCartByUserId(this.firebaseAuthService.getFirebaseUser().uid)
+      .subscribe((cart: CartDTO) => {
+        this.cartContentService.fetchCartContentByCartId(cart.warenkorbID);
+        this.cartContentService
+          .getCartContent()
+          .subscribe((content: CartContent[]) => {
+            this.cartContent = content;
+            console.log(this.cartContent);
+            this.productCount = 0;
+            content.forEach((cartContent: CartContent) => {
+              this.productCount += cartContent.anzahl;
             });
-        });
-      this.userService
-        .getUser(this.firebaseAuthService.getUserID())
-        .subscribe((user) => {
-          this.isAdmin = user.isAdmin;
-        });
-    });
+          });
+      });
+  }
+
+  setAdmin() {
+    this.userService
+      .getUser(this.firebaseAuthService.getUserID())
+      .subscribe((user) => {
+        this.isAdmin = user.isAdmin;
+      });
   }
 
   onSearchTextChanged() {
