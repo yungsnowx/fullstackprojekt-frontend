@@ -1,30 +1,31 @@
+import { Injectable } from '@angular/core';
 import {
   Auth,
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
-  signOut
+  signOut,
 } from '@angular/fire/auth';
-import {Injectable} from "@angular/core";
-import {UserService} from "../user/user.service";
-import {UserDTO} from "../../model/user/userDTO";
-import {Router} from "@angular/router";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {CartService} from "../cart/cart.service";
-import {CartDTO} from "../../model/cart/cartDTO";
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { take } from 'rxjs';
+import { CartDTO } from '../../model/cart/cartDTO';
+import { UserDTO } from '../../model/user/userDTO';
+import { CartService } from '../cart/cart.service';
+import { UserService } from '../user/user.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 @Injectable()
 export class FirebaseAuthService {
-
-  constructor(private auth: Auth,
-              private userService: UserService,
-              private cartService: CartService,
-              private router: Router,
-              private snackBar: MatSnackBar) {
-  }
+  constructor(
+    private auth: Auth,
+    private userService: UserService,
+    private cartService: CartService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {}
 
   getFirebaseUser(): any {
     return this.auth.currentUser;
@@ -38,11 +39,9 @@ export class FirebaseAuthService {
     return sendPasswordResetEmail(this.auth, email);
   }
 
-
   logIn(email: string, password: string) {
     signInWithEmailAndPassword(this.auth, email, password)
       .then((userCredential) => {
-
         // Signed in
         this.router.navigate(['/']);
         const user = userCredential.user;
@@ -51,35 +50,53 @@ export class FirebaseAuthService {
       .catch((error) => {
         const errorCode = error.code;
         console.log(errorCode);
-        this.snackBar.open("Falsche Anmeldedaten", "OK", {
+        this.snackBar.open('Falsche Anmeldedaten', 'OK', {
           duration: 5000,
         });
-      })
+      });
   }
 
   signUp(email: string, password: string) {
-    createUserWithEmailAndPassword(this.auth, email, password)
-      .then((userCredential) => {
-          // Signed in
-          this.router.navigate(['#']);
-          const user = userCredential.user;
-          console.log(user);
-        }
-      );
+    createUserWithEmailAndPassword(this.auth, email, password).then(
+      (userCredential) => {
+        // Signed in
+        this.router.navigate(['#']);
+        const user = userCredential.user;
+        console.log(user);
+      }
+    );
   }
 
-  signUpAndSendBackend(email: string, password: string, vorname: string, nachname: string): UserDTO {
-    createUserWithEmailAndPassword(this.auth, email, password)
-      .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          console.log(user);
-          let userObject: UserDTO = new UserDTO(user.uid, vorname, nachname, false);
-          this.userService.saveUser(userObject);
-          this.cartService.addCart(new CartDTO(0, user.uid, true)).subscribe();
-          return userObject;
-        }
-      );
+  signUpAndSendBackend(
+    email: string,
+    password: string,
+    vorname: string,
+    nachname: string
+  ): UserDTO {
+    createUserWithEmailAndPassword(this.auth, email, password).then(
+      (userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        console.log(user);
+        let userObject: UserDTO = new UserDTO(
+          user.uid,
+          vorname,
+          nachname,
+          false
+        );
+        userCredential.user.getIdToken().then((token) => {
+          this.userService
+            .saveUser(userObject, token)
+            .pipe(take(1))
+            .subscribe(() => {
+              this.cartService
+                .addCart(new CartDTO(0, user.uid, true))
+                .subscribe();
+            });
+        });
+        return userObject;
+      }
+    );
     return null;
   }
 
@@ -89,7 +106,7 @@ export class FirebaseAuthService {
 
   waitForAuth(): Promise<any> {
     return new Promise((resolve, reject) => {
-      const unsubscribe = this.auth.onAuthStateChanged(user => {
+      const unsubscribe = this.auth.onAuthStateChanged((user) => {
         unsubscribe();
         resolve(user);
       }, reject);
